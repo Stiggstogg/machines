@@ -13,8 +13,8 @@ type GameOptions = {
 
 const gameOptions: GameOptions = {
     gameTitle: 'My Game',
-    gameWidth: 800,
-    gameHeight: 600,
+    gameWidth: 1024,
+    gameHeight: 488,
     textStyles: [
         {
             fontFamily: 'Orbitron',
