@@ -1,11 +1,11 @@
 {
-  "name": "phaser4-ts-vite-template",
-  "description": "Stiggstoggs Phaser 4, Vite, TypeScript template",
-  "version": "1.0.1",
+  "name": "machines",
+  "description": "My Entry to Gamedev.js 2025, Theme: 'Machines'",
+  "version": "0.0.1",
   "author": "Stiggstogg",
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
-  "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
+  "homepage": "https://github.com/Stiggstogg/machines",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
