@@ -1,0 +1,47 @@
+{ "frames": {
+   "0": {
+    "frame": { "x": 3, "y": 165, "w": 74, "h": 173 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 28, "y": 13, "w": 68, "h": 167 },
+    "sourceSize": { "w": 125, "h": 180 },
+    "duration": 100
+   },
+   "1": {
+    "frame": { "x": 3, "y": 3, "w": 100, "h": 159 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 15, "y": 27, "w": 94, "h": 153 },
+    "sourceSize": { "w": 125, "h": 180 },
+    "duration": 100
+   },
+   "2": {
+    "frame": { "x": 106, "y": 3, "w": 75, "h": 173 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 46, "y": 13, "w": 69, "h": 167 },
+    "sourceSize": { "w": 125, "h": 180 },
+    "duration": 100
+   },
+   "3": {
+    "frame": { "x": 184, "y": 3, "w": 75, "h": 173 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 10, "y": 13, "w": 69, "h": 167 },
+    "sourceSize": { "w": 125, "h": 180 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-x64",
+  "image": "robot.png",
+  "format": "RGBA8888",
+  "size": { "w": 262, "h": 341 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "robot-idle", "from": 0, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "robot-dance", "from": 2, "to": 3, "direction": "forward", "color": "#000000ff" }
+  ]
+ }
+}

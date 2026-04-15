@@ -11,21 +11,25 @@ import { GameOver } from './scenes/GameOver';
 // other imports
 import gameOptions from './helper/gameOptions';
 
+// define here game width and game height
+const gameWidth = 1024;
+const gameHeight = 488;
+
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
 const config: Phaser.Types.Core.GameConfig = {
     title: gameOptions.gameTitle,
     type: AUTO,
-    width: gameOptions.gameWidth,
-    height: gameOptions.gameHeight,
+    width: gameWidth,
+    height: gameHeight,
     parent: 'game-container',
     backgroundColor: '#9badb7',
     scale: {
         mode: Scale.FIT,
         autoCenter: Scale.CENTER_BOTH,
         max: {
-            width: gameOptions.gameWidth * 1.5,
-            height: gameOptions.gameHeight * 1.5
+            width: gameWidth * 1.5,
+            height: gameHeight * 1.5
         }
     },
     scene: [

@@ -6,15 +6,20 @@ import type { Types } from 'phaser';
 
 type GameOptions = {
     readonly gameTitle: string;
-    readonly gameWidth: number;
-    readonly gameHeight: number;
+    readonly dancerAnimFrameRate: number;
     readonly textStyles: ReadonlyArray<Readonly<Types.GameObjects.Text.TextStyle>>;
+    readonly lightColors: number[];
 };
 
 const gameOptions: GameOptions = {
     gameTitle: 'My Game',
-    gameWidth: 1024,
-    gameHeight: 488,
+    dancerAnimFrameRate: 5,
+    lightColors: [
+        0x000000,
+        0x5b6ee1,
+        0xfbf236,
+        0xdf7126
+    ],
     textStyles: [
         {
             fontFamily: 'Orbitron',

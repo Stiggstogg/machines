@@ -1,0 +1,17 @@
+{
+  "level": {
+    "song": "song1",
+    "ruleSet": [
+      {
+        "patternKey": "test1",
+        "markerName": null,
+        "lightColors": [
+          null,
+          "3"
+        ],
+        "lightInSync": null,
+        "danceKey": "dance"
+      }
+    ]
+  }
+}
