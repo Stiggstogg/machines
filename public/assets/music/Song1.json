@@ -1,22 +1,22 @@
 { "song": [
     {
-      "patternKey": "test1",
-      "markerName": "0",
+      "albumName": "album1",
+      "trackName": "0",
       "lightColors": ["0", "1"]
     },
     {
-      "patternKey": "test1",
-      "markerName": "1",
+      "albumName": "album1",
+      "trackName": "1",
       "lightColors": ["2", "3"]
     },
     {
-      "patternKey": "test1",
-      "markerName": "2",
+      "albumName": "album1",
+      "trackName": "2",
       "lightColors": ["0", "0"]
     },
     {
-      "patternKey": "test1",
-      "markerName": "3",
+      "albumName": "album1",
+      "trackName": "3",
       "lightColors": ["3", "3"]
     }
   ]

@@ -3,13 +3,13 @@
     "song": "song1",
     "ruleSet": [
       {
-        "patternKey": "test1",
-        "markerName": null,
+        "albumName": "album1",
+        "trackName": null,
         "lightColors": [
           null,
           "3"
         ],
-        "lightInSync": null,
+        "lightsInSync": null,
         "danceKey": "dance"
       }
     ]

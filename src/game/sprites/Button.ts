@@ -1,0 +1,28 @@
+import { GameObjects, Scene } from 'phaser';
+import gameOptions from '../helper/gameOptions.ts';
+
+// Button class
+export class Button extends GameObjects.Sprite {
+
+    private readonly danceKey: string
+
+    // Constructor
+    constructor(scene: Scene, x: number, y: number, buttonNr: number) {
+
+        super(scene, x, y, 'buttons', buttonNr);
+        this.danceKey = gameOptions.danceKeysForButtons[buttonNr];
+        this.setInteractive();
+
+        this.on('pointerdown', () => {
+            this.buttonClicked();
+        });
+
+    }
+
+    private buttonClicked() {
+
+        this.scene.events.emit('danceButtonClicked', this.danceKey);
+
+    }
+
+}

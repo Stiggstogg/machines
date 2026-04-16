@@ -47,13 +47,16 @@ export class Preloader extends Scene
 
         // images
         this.load.image('light', 'images/light.png');
+        this.load.image('meterScale', 'images/meterScale.png');
+        this.load.image('meterIndicator', 'images/meterIndicator.png');
 
         // spritesheets
         this.load.aseprite('human', 'images/human.png', 'images/human.json');
         this.load.aseprite('robot', 'images/robot.png', 'images/robot.json');
+        this.load.spritesheet('buttons', 'images/buttons.png', {frameWidth: 47, margin: 3, spacing: 3});
 
-        // audio: Patterns
-        this.load.audioSprite('test1', 'music/Test1.json', 'music/Test1.ogg');
+        // audio: Albums
+        this.load.audioSprite('album1', 'music/Album1.json', 'music/Album1.ogg');
 
         // audio: Songs
         this.load.json('song1', 'music/Song1.json');

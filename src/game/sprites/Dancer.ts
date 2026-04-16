@@ -1,6 +1,6 @@
 import { GameObjects, Scene } from 'phaser';
 import gameOptions from '../helper/gameOptions.ts';
-import {RuleSet} from '../helper/types.ts';
+import {Pattern, RuleSet} from '../helper/types.ts';
 
 // Dancer class which is extended by the Human and Robot class
 export class Dancer extends GameObjects.Sprite {
@@ -21,14 +21,58 @@ export class Dancer extends GameObjects.Sprite {
     }
 
     // Change the dance animation
-    dance(animation: string): void {
+    dance(danceKey: string): void {
 
-        let animationKey = this.animationPrefix + animation;
+        let animationKey = this.animationPrefix + danceKey;    // to make the animations globally unique, a prefix was added for the human and the robot
 
         if (this.anims.getName() !== animationKey || !this.anims.isPlaying) {
             this.play({key: animationKey, frameRate: this.frameRate, repeat: -1});
         }
 
     }
+
+    // Get the expected dance key based on the current pattern and the rule set
+    getExpectedDanceKey(currentPattern: Pattern): string {
+
+        // iterate through each rule in the rule set
+        for (const rule of this.ruleSet) {
+
+            let matches = true;
+
+            // check album name if not null
+            if (rule.albumName !== null && rule.albumName !== currentPattern.albumName) {
+                matches = false;
+            }
+
+            // check track name if not null
+            if (matches && rule.trackName !== null && rule.trackName !== currentPattern.trackName) {
+                matches = false;
+            }
+
+            // check lightsInSync if not null
+            if (matches && rule.lightsInSync !== null && rule.lightsInSync !== currentPattern.lightsInSync) {
+                matches = false;
+            }
+
+            // check lightColors if not null
+            for (let i = 0; i < rule.lightColors.length; i++) {
+                if (matches && rule.lightColors[i] !== null && rule.lightColors[i] !== currentPattern.lightColors[i]) {
+                    matches = false;
+                    break;
+                }
+            }
+
+            // if all non-null properties match, return the dance key (this will directly return the key if a rule fits,
+            // this means that rules higher up in the hierarchy have priority
+            if (matches) {
+                return rule.danceKey;
+            }
+        }
+
+        // if no rule matched, return idle animation
+        return 'idle'
+
+    }
+
 
 }

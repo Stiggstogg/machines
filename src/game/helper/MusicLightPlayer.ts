@@ -1,20 +1,20 @@
-import {PatternCombination, Song} from './types.ts';
+import {Pattern, Song} from './types.ts';
 import {Light} from '../sprites/Light.ts';
 
 export class MusicLightPlayer {
 
     private readonly scene: Phaser.Scene
     private song: Song
-    private patternTracker: number              // tracks which pattern should be played
+    private sectionTracker: number              // tracks which section should be played
     private currentAudio: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound
     private readonly lights: Light[];
-    private currentPatternCombination: PatternCombination;
+    private currentPattern: Pattern;
 
     // Constructor
     constructor(scene: Phaser.Scene, lights: Light[]) {
 
         this.scene = scene;
-        this.patternTracker = 0;
+        this.sectionTracker = 0;
         this.lights = lights;
 
     }
@@ -29,7 +29,7 @@ export class MusicLightPlayer {
         this.song = this.scene.cache.json.get(songKey).song;
 
         // set the tracker back to the beginning
-        this.patternTracker = 0;
+        this.sectionTracker = 0;
 
     }
 
@@ -39,60 +39,62 @@ export class MusicLightPlayer {
         // stop the current audio in case it exists
         this.currentAudio?.stop();
 
-        // set the current pattern and its combinations
-        this.setPatternCombination();
+        // set the current pattern
+        this.setPattern();
 
         // set the light colors
         for (let i = 0; i < this.lights.length; i++) {
-            this.lights[i].color(Number(this.currentPatternCombination.lightColors[i]));
+            this.lights[i].color(Number(this.currentPattern.lightColors[i]));
         }
 
         // create the audio object
-        this.currentAudio = this.scene.sound.addAudioSprite(this.currentPatternCombination.patternKey);
+        this.currentAudio = this.scene.sound.addAudioSprite(this.currentPattern.albumName);
 
-        this.currentAudio.play(this.currentPatternCombination.markerName);
+        this.currentAudio.play(this.currentPattern.trackName);
 
         this.currentAudio.once('complete', () => {
 
-            if (this.patternTracker < this.song.length -1) {       // continue with the next pattern when the song is not finished yet
-                this.patternTracker++;
+            if (this.sectionTracker < this.song.length -1) {       // continue with the next pattern when the song is not finished yet
+                this.sectionTracker++;
                 this.playSong();
             }
             else {
-                this.patternTracker = 0;
+                this.sectionTracker = 0;
             }
         })
 
     }
 
-    // set the current pattern and combinations
-    setPatternCombination() {
+    // set the current pattern
+    setPattern() {
 
-        // set the pattern and marker keys
-        this.currentPatternCombination = {
-            patternKey: this.song[this.patternTracker].patternKey,
-            markerName: this.song[this.patternTracker].markerName,
+        // set the names and initialize the other properties
+        this.currentPattern = {
+            albumName: this.song[this.sectionTracker].albumName,
+            trackName: this.song[this.sectionTracker].trackName,
             lightColors: [],
             lightsInSync: false
         }
 
-        // set the light color numbers
+        // set the light color numbers and check if the lights are in sync
         let inSync = true;
 
         for (let i = 0; i < this.lights.length; i++) {
-            this.currentPatternCombination.lightColors.push(this.song[this.patternTracker].lightColors[i]);
+            this.currentPattern.lightColors.push(this.song[this.sectionTracker].lightColors[i]);
 
-            if (i > 0 && this.currentPatternCombination.lightColors[i] !== this.currentPatternCombination.lightColors[i-1]) {
+            if (i > 0 && inSync && this.currentPattern.lightColors[i] !== this.currentPattern.lightColors[i-1]) {
                 inSync = false;
             }
 
         }
+
+        this.currentPattern.lightsInSync = inSync;
         
     }
 
-    // get current pattern and combinations
-    getCurrentPatternCombination(): PatternCombination {
-        return this.currentPatternCombination;
+    // get current pattern
+    getCurrentPattern(): Pattern {
+        return this.currentPattern;
     }
 
 }

@@ -3,12 +3,15 @@
 
 // Phaser imports
 import type { Types } from 'phaser';
+import {MeterParameters} from './types.ts';
 
 type GameOptions = {
     readonly gameTitle: string;
     readonly dancerAnimFrameRate: number;
     readonly textStyles: ReadonlyArray<Readonly<Types.GameObjects.Text.TextStyle>>;
     readonly lightColors: number[];
+    readonly danceKeysForButtons: string[];
+    readonly meterParameters: MeterParameters;
 };
 
 const gameOptions: GameOptions = {
@@ -27,7 +30,19 @@ const gameOptions: GameOptions = {
             color: '#FFE500',
             fontStyle: 'bold'
         }
-    ]
+    ],
+    danceKeysForButtons: [          // TODO: Add here the proper dance keys as soon as they are defined
+        'idle',
+        'dance',
+        'dance',
+        'dance',
+        'dance'
+    ],
+    meterParameters: {
+        maximum: 100,           // maximum value when
+        wrongFactor: 0.6,       // how much the meter value increases per frame if the human dances wrongly
+        correctFactor: -0.2,    // how much the meter value increases (negative -> decrease) per frame if the human dances correctly
+    }
 };
 
 export default gameOptions;
