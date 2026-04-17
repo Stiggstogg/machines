@@ -31,3 +31,10 @@ Resources
 
 # Do not upload any environment variables
 *.env
+
+# Do not upload the AI assistent files
+.aiassistant
+
+# Do not upload any aseprite files
+*.ase
+*.aseprite

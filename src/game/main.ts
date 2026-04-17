@@ -12,8 +12,8 @@ import { GameOver } from './scenes/GameOver';
 import gameOptions from './helper/gameOptions';
 
 // define here game width and game height
-const gameWidth = 1024;
-const gameHeight = 488;
+const gameWidth = 488;
+const gameHeight = 1024;
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
