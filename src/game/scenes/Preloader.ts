@@ -46,14 +46,18 @@ export class Preloader extends Scene
         this.load.setPath('./assets/');
 
         // images
+        this.load.image('holder', 'images/holder.png');
         this.load.image('light', 'images/light.png');
-        this.load.image('meterScale', 'images/meterScale.png');
-        this.load.image('meterIndicator', 'images/meterIndicator.png');
+        this.load.image('meter', 'images/meter.png');
+        this.load.image('squareButton', 'images/squareButton.png');
 
         // spritesheets
+        this.load.spritesheet('roundButtons', 'images/roundButtons.png', {frameWidth: 110, margin: 3, spacing: 3});
+
+        // spritesheets (aseprite format)
+        this.load.aseprite('floor', 'images/floor.png', 'images/floor.json');
         this.load.aseprite('human', 'images/human.png', 'images/human.json');
         this.load.aseprite('robot', 'images/robot.png', 'images/robot.json');
-        this.load.spritesheet('buttons', 'images/buttons.png', {frameWidth: 47, margin: 3, spacing: 3});
 
         // audio: Albums
         this.load.audioSprite('album1', 'music/Album1.json', 'music/Album1.ogg');
@@ -71,7 +75,7 @@ export class Preloader extends Scene
         //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
         //  For example, you can define global animations here, so we can use them in other scenes.
 
-        // aseprite animations
+        // Create aseprite animations
         this.anims.createFromAseprite('human');
         this.anims.createFromAseprite('robot');
 

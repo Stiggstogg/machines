@@ -34,8 +34,6 @@ const gameOptions: GameOptions = {
     danceKeysForButtons: [          // TODO: Add here the proper dance keys as soon as they are defined
         'idle',
         'dance',
-        'dance',
-        'dance',
         'dance'
     ],
     meterParameters: {

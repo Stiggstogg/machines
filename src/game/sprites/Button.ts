@@ -9,7 +9,7 @@ export class Button extends GameObjects.Sprite {
     // Constructor
     constructor(scene: Scene, x: number, y: number, buttonNr: number) {
 
-        super(scene, x, y, 'buttons', buttonNr);
+        super(scene, x, y, 'roundButtons', buttonNr);
         this.danceKey = gameOptions.danceKeysForButtons[buttonNr];
         this.setInteractive();
 

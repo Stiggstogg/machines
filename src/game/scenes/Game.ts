@@ -1,4 +1,4 @@
-import {Scene} from 'phaser';
+import {GameObjects, Scene} from 'phaser';
 import {Human} from '../sprites/Human.ts';
 import {Robot} from '../sprites/Robot.ts';
 import {Light} from '../sprites/Light.ts';
@@ -10,10 +10,11 @@ import Meter from '../sprites/Meter.ts';
 export class Game extends Scene
 {
     
+    private floor: GameObjects.Sprite;
     private human: Human;
     private robot: Robot;
-    private light1: Light;
-    private light2: Light;
+    private lightLeft: Light;
+    private lightRight: Light;
     private ruleSet: RuleSet;
     private musicLightPlayer: MusicLightPlayer;
     private buttons: Button[];
@@ -27,22 +28,43 @@ export class Game extends Scene
     create ()
     {
 
+        // set background color
+        this.cameras.main.setBackgroundColor(0x3f3f74);
+
+        // add floor
+        this.floor = this.add.sprite(0, this.scale.height,'floor');
+        this.floor.setOrigin(0, 1);
+
         // get the rule set for this level
         this.ruleSet = this.cache.json.get('level1').level.ruleSet as RuleSet;
 
         // add human and robot
-        this.human = this.add.existing(new Human(this, this.scale.width * 0.1, this.scale.height / 2, this.ruleSet));
-        this.robot = this.add.existing(new Robot(this, this.scale.width * 0.4, this.scale.height / 2, this.ruleSet));
+        const danceYPosition = 0.77;
+        this.human = this.add.existing(new Human(this, this.scale.width * -0.5, this.scale.height * danceYPosition, this.ruleSet));
+        this.robot = this.add.existing(new Robot(this, this.scale.width * 0.5, this.scale.height * danceYPosition, this.ruleSet));
+
+        // add holder for lights
+        const holderXPosition = 0.10;    // holder position from nearest edge
+        const holderYPosition = 0.15;    // holder position from
+        const holderYOffset = -0.05;     // the right holder is a bit higher up compared to the other
+        const holderMountPosition = {x: 16, y: 52};     // position where on the holder the light is mounted, the origin of this image will be set to this coordinate
+
+        // add holder for lights
+        const leftHolder = this.add.image(this.scale.width * holderXPosition, this.scale.height * holderYPosition, 'holder');
+        leftHolder.setOrigin(holderMountPosition.x / leftHolder.displayWidth, holderMountPosition.y / leftHolder.displayHeight);
+        const rightHolder = this.add.image(this.scale.width * (1 - holderXPosition), this.scale.height * (holderYPosition + holderYOffset),'holder');
+        rightHolder.setFlipX(true);
+        rightHolder.setOrigin(1 - holderMountPosition.x / leftHolder.displayWidth, holderMountPosition.y / leftHolder.displayHeight);
 
         // add lights
-        this.light1 = this.add.existing(new Light(this, this.scale.width * 0.05, this.scale.height * 0.2));
-        this.light2 = this.add.existing(new Light(this, this.scale.width * 0.45, this.scale.height * 0.2));
+        this.lightLeft = this.add.existing(new Light(this, leftHolder.x, leftHolder.y, true));
+        this.lightRight = this.add.existing(new Light(this, rightHolder.x, rightHolder.y, false));
 
         // add buttons
         this.buttons = [];
 
-        for (let i = 0; i < 5; i++) {
-            const button = this.add.existing(new Button(this, 100 + i * 100, 400, i));
+        for (let i = 0; i < 3; i++) {
+            const button = this.add.existing(new Button(this, this.scale.width * 0.167 + i * this.scale.width * 0.333, this.scale.height * 0.93, i));
             this.buttons.push(button);
         }
 
@@ -52,10 +74,10 @@ export class Game extends Scene
         })
 
         // add the meter
-        this.meter = this.add.existing(new Meter(this, this.scale.width * 0.25, this.scale.height * 0.1));
+        this.meter = this.add.existing(new Meter(this, this.scale.width * 0.92, this.scale.height * 0.5));
 
         // play song
-        this.musicLightPlayer = new MusicLightPlayer(this, [this.light1, this.light2]);
+        this.musicLightPlayer = new MusicLightPlayer(this, [this.lightLeft, this.lightRight]);
         this.musicLightPlayer.loadSong('song1');
         this.musicLightPlayer.playSong();
 

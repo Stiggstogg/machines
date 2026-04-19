@@ -1,0 +1,21 @@
+{ "frames": {
+   "0": {
+    "frame": { "x": 3, "y": 3, "w": 494, "h": 395 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 488, "h": 389 },
+    "sourceSize": { "w": 488, "h": 389 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-x64",
+  "image": "floor.png",
+  "format": "RGBA8888",
+  "size": { "w": 500, "h": 401 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

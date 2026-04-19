@@ -5,8 +5,8 @@ import gameOptions from '../helper/gameOptions.ts';
 export default class Meter extends GameObjects.Container {
 
     private value: number;
-    private meterScale: GameObjects.Image;
-    private meterIndicator: GameObjects.Image;
+    private readonly indicator: GameObjects.Rectangle;
+    private readonly readingHeight: number;
 
     // Constructor
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -14,12 +14,23 @@ export default class Meter extends GameObjects.Container {
         super(scene, x, y);
         this.value = 0;
 
-        // create the scale and add it to the container
-        this.meterScale = new GameObjects.Image(scene, 0, 0, 'meterScale');
-        this.meterIndicator = new GameObjects.Image(scene, 0, 0, 'meterIndicator');
+        // create the scale housing and calculate the positions of the meter reading window
+        const meterHousing = new GameObjects.Image(scene, 0, 0, 'meter');
+        const readingOffsetY = meterHousing.displayHeight / 2 - 40;          // y position where the reading window starts
+        this.readingHeight = 352;           // height of the reading window
+        const readingWidth = 20;           // width of the reading window
+
+        // create the background of the reading
+        const meterBackground = new GameObjects.Rectangle(scene, 0, readingOffsetY, readingWidth, this.readingHeight, 0x663931);
+        meterBackground.setOrigin(0.5, 1);
+
+        // create the indicator
+        this.indicator = new GameObjects.Rectangle(scene, 0, readingOffsetY, readingWidth, this.readingHeight, 0xdf7126);
+        this.indicator.setOrigin(0.5, 0);
+        this.indicator.setRotation(Math.PI);        // needs to be rotated otherwise it fills up from the top down
 
         // add both images to the container
-        this.add([this.meterScale, this.meterIndicator]);
+        this.add([meterBackground, this.indicator, meterHousing]);
 
         // set the indicator
         this.setIndicator();
@@ -29,13 +40,8 @@ export default class Meter extends GameObjects.Container {
     // calculate and set the indicator to the right position based on the value
     setIndicator() {
 
-        // parameters for the scale image
-        const scaleWidthFull = this.meterScale.displayWidth;
-        const scaleOutlineWidth = 2;                                           // Update this value in case the image changes
-        const indicatorWidth = this.meterIndicator.displayWidth;
-        const scaleWidth = scaleWidthFull - 2 * scaleOutlineWidth - indicatorWidth;
-
-        this.meterIndicator.setX(- scaleWidthFull / 2 + scaleOutlineWidth + indicatorWidth / 2 + this.value / gameOptions.meterParameters.maximum * scaleWidth);
+        // set the indicator rectangle width accoring to the value
+        this.indicator.height = (this.value / gameOptions.meterParameters.maximum * this.readingHeight);
 
     }
 
@@ -49,8 +55,8 @@ export default class Meter extends GameObjects.Container {
             this.value += gameOptions.meterParameters.wrongFactor
         }
 
-        if (this.value > 100) {
-            this.value = 100;
+        if (this.value > gameOptions.meterParameters.maximum) {
+            this.value = gameOptions.meterParameters.maximum;
         }
         else if (this.value < 0) {
             this.value = 0;

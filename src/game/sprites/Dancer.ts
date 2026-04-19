@@ -18,6 +18,8 @@ export class Dancer extends GameObjects.Sprite {
         this.animationPrefix = key + '-';
         this.ruleSet = ruleSet;
 
+        this.setOrigin(0.5, 1);     // set origin to bottom
+
     }
 
     // Change the dance animation
