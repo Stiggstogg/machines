@@ -2,7 +2,7 @@ import { GameObjects, Scene } from 'phaser';
 import gameOptions from '../helper/gameOptions.ts';
 
 // Button class
-export class Button extends GameObjects.Sprite {
+export class DanceButton extends GameObjects.Sprite {
 
     private readonly danceKey: string
 

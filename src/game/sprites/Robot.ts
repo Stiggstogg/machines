@@ -6,9 +6,9 @@ import {SongSection, Pattern, RuleSet} from '../helper/types.ts';
 export class Robot extends Dancer {
 
     // Constructor
-    constructor(scene: Scene, x: number, y: number, ruleSet: RuleSet) {
+    constructor(scene: Scene, x: number, y: number, ruleSet: RuleSet, bpm: number) {
 
-        super(scene, x, y, 'robot', ruleSet);
+        super(scene, x, y, 'robot', ruleSet, bpm);
 
         this.dance('idle');
 

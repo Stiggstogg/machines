@@ -10,11 +10,11 @@ export class Dancer extends GameObjects.Sprite {
     protected ruleSet: RuleSet;
 
     // Constructor
-    constructor(scene: Scene, x: number, y: number, key: string, ruleSet: RuleSet) {
+    constructor(scene: Scene, x: number, y: number, key: string, ruleSet: RuleSet, bpm: number) {
 
         super(scene, x, y, key);
 
-        this.frameRate = gameOptions.dancerAnimFrameRate;
+        this.frameRate = bpm / 60 * 2;       // converts the bpm to the right dance speed
         this.animationPrefix = key + '-';
         this.ruleSet = ruleSet;
 

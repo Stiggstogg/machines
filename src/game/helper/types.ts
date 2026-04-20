@@ -25,3 +25,28 @@ export interface MeterParameters {
     wrongFactor: number;
     correctFactor: number;
 }
+
+// Game scene data
+export interface GameSceneData {
+    level: number
+}
+
+// UI positions
+interface Position {
+    x: number;
+    y: number;
+}
+
+export interface UIPositions {
+    humanRobot: Position,
+    time: Position,
+    instructionTop1: Position,
+    instructionTop2: Position,
+    hint: Position,
+    instructionBottom: Position,
+    countdown: Position,
+    letsgo: Position,
+    danceButtons: Position,
+    meter: Position,
+    startOffset: Position
+}

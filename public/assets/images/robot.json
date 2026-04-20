@@ -8,7 +8,7 @@
     "duration": 100
    },
    "1": {
-    "frame": { "x": 3, "y": 3, "w": 202, "h": 515 },
+    "frame": { "x": 208, "y": 3, "w": 202, "h": 515 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
@@ -16,7 +16,7 @@
     "duration": 100
    },
    "2": {
-    "frame": { "x": 3, "y": 3, "w": 202, "h": 515 },
+    "frame": { "x": 413, "y": 3, "w": 202, "h": 515 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
@@ -24,7 +24,7 @@
     "duration": 100
    },
    "3": {
-    "frame": { "x": 3, "y": 3, "w": 202, "h": 515 },
+    "frame": { "x": 3, "y": 521, "w": 202, "h": 515 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
@@ -32,7 +32,39 @@
     "duration": 100
    },
    "4": {
-    "frame": { "x": 3, "y": 3, "w": 202, "h": 515 },
+    "frame": { "x": 208, "y": 521, "w": 202, "h": 515 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
+    "sourceSize": { "w": 282, "h": 558 },
+    "duration": 100
+   },
+   "5": {
+    "frame": { "x": 413, "y": 521, "w": 202, "h": 515 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
+    "sourceSize": { "w": 282, "h": 558 },
+    "duration": 100
+   },
+   "6": {
+    "frame": { "x": 3, "y": 1039, "w": 202, "h": 515 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
+    "sourceSize": { "w": 282, "h": 558 },
+    "duration": 100
+   },
+   "7": {
+    "frame": { "x": 208, "y": 1039, "w": 202, "h": 515 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
+    "sourceSize": { "w": 282, "h": 558 },
+    "duration": 100
+   },
+   "8": {
+    "frame": { "x": 413, "y": 1039, "w": 202, "h": 515 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 43, "y": 49, "w": 196, "h": 509 },
@@ -45,11 +77,13 @@
   "version": "1.3.17-x64",
   "image": "robot.png",
   "format": "RGBA8888",
-  "size": { "w": 208, "h": 521 },
+  "size": { "w": 618, "h": 1557 },
   "scale": "1",
   "frameTags": [
    { "name": "robot-idle", "from": 1, "to": 2, "direction": "forward", "color": "#000000ff" },
-   { "name": "robot-dance", "from": 3, "to": 4, "direction": "forward", "color": "#000000ff" }
+   { "name": "robot-dance1", "from": 3, "to": 4, "direction": "forward", "color": "#000000ff" },
+   { "name": "robot-dance2", "from": 5, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "robot-inout", "from": 7, "to": 8, "direction": "forward", "color": "#000000ff" }
   ]
  }
 }

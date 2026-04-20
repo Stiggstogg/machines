@@ -1,6 +1,9 @@
 {
   "level": {
     "song": "song1",
+    "bpm": "120",
+    "time": "23:00",
+    "hint": "Hint: Watch the spotlights!",
     "ruleSet": [
       {
         "albumName": "album1",
@@ -10,7 +13,7 @@
           "3"
         ],
         "lightsInSync": null,
-        "danceKey": "dance"
+        "danceKey": "dance1"
       }
     ]
   }

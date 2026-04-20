@@ -22,9 +22,6 @@ export class MusicLightPlayer {
     // load a new song
     loadSong(songKey: string) {
 
-        // stop the current audio in case it exists
-        this.currentAudio?.stop();
-
         // get the raw json data for the song
         this.song = this.scene.cache.json.get(songKey).song;
 
@@ -35,6 +32,9 @@ export class MusicLightPlayer {
 
     // play a full song
     playSong() {
+
+        // emit an event to the scene, so that the scene knows when a new section starts
+        this.scene.events.emit('newSongSection');
 
         // stop the current audio in case it exists
         this.currentAudio?.stop();
@@ -54,13 +54,14 @@ export class MusicLightPlayer {
 
         this.currentAudio.once('complete', () => {
 
-            if (this.sectionTracker < this.song.length -1) {       // continue with the next pattern when the song is not finished yet
+            if (this.sectionTracker < this.song.length -1) {       // go to the next section or start from beginning
                 this.sectionTracker++;
-                this.playSong();
             }
             else {
                 this.sectionTracker = 0;
             }
+
+            this.playSong();
         })
 
     }
