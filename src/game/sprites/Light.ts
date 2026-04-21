@@ -1,4 +1,4 @@
-import { GameObjects, Scene, Math as MathPhaser, Tweens } from 'phaser';
+import { GameObjects, Scene, Math as MathPhaser, Tweens, Time } from 'phaser';
 import gameOptions from '../helper/gameOptions.ts';
 
 // Light class
@@ -6,12 +6,17 @@ export class Light extends GameObjects.Sprite {
 
     private readonly left: boolean          // if this is true then it is the left light, otherwise the right
     private readonly rotationTween: Tweens.Tween
+    private isFlickering: boolean                // flag if the lights are flickering
+    private flickerColorNumber: number;
+    private flickerTimer?: Time.TimerEvent;
 
     // Constructor
     constructor(scene: Scene, x: number, y: number, left: boolean, bpm: number) {
 
         super(scene, x, y, 'light');
         this.left = left;
+        this.isFlickering = false;
+        this.flickerColorNumber = 0;
 
         // Position the origin to rotate around at the place were it is fixed to the holder and flip it if needed
         // set the rotation direction and speed
@@ -60,6 +65,67 @@ export class Light extends GameObjects.Sprite {
     rotateLight() {
 
         this.rotationTween.play();
+
+    }
+
+    // stop light rotation
+    rotateLightStop() {
+
+        this.rotationTween.pause();
+
+    }
+
+    // start the flickering of the lights
+    flickerStart(startColor: number) {
+
+        // set the flickering flag
+        this.isFlickering = true;
+
+        // set the starting color
+        this.flickerColorNumber = startColor;
+
+        // prevent multiple flicker loops from running at the same time
+        this.flickerTimer?.remove();
+
+        this.flickerTimer = this.scene.time.addEvent({
+            delay: 1 / (gameOptions.winDanceBPM / 60) * 1000,
+            callback: this.flicker,
+            callbackScope: this,
+            loop: true
+        });
+
+        // initiate the first flicker
+        this.flicker();
+
+    }
+
+    // flicker the lights (one time)
+    flicker() {
+
+        this.color(this.flickerColorNumber);
+
+        // set the next color number
+        if (this.flickerColorNumber < gameOptions.lightColors.length) {
+
+            this.flickerColorNumber++;          // move to the next color number
+
+        }
+        else {
+
+            this.flickerColorNumber = 0;        // reset the flicker color number
+
+        }
+
+    }
+
+    // stop the flickering of the lights
+    flickerStop() {
+
+        this.isFlickering = false;
+
+        this.flickerTimer?.remove();
+
+        this.flickerTimer = undefined;
 
     }
 

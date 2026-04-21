@@ -1,6 +1,7 @@
 {
   "level": {
-    "song": "song1",
+    "robotSong": "song1",
+    "humanSong": "song2",
     "bpm": "120",
     "time": "23:00",
     "hint": "Hint: Watch the spotlights!",

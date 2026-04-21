@@ -50,6 +50,7 @@ export class Preloader extends Scene
         this.load.image('light', 'images/light.png');
         this.load.image('meter', 'images/meter.png');
         this.load.image('squareButton', 'images/squareButton.png');
+        this.load.image('miniRobot', 'images/miniRobot.png');
 
         // spritesheets
         this.load.spritesheet('roundButtons', 'images/roundButtons.png', {frameWidth: 110, margin: 3, spacing: 3});
@@ -58,6 +59,9 @@ export class Preloader extends Scene
         this.load.aseprite('floor', 'images/floor.png', 'images/floor.json');
         this.load.aseprite('human', 'images/human.png', 'images/human.json');
         this.load.aseprite('robot', 'images/robot.png', 'images/robot.json');
+
+        // audio
+        this.load.audio('win', 'music/Win.ogg');
 
         // audio: Albums
         this.load.audioSprite('album1', 'music/Album1.json', 'music/Album1.ogg');

@@ -39,13 +39,15 @@ interface Position {
 
 export interface UIPositions {
     humanRobot: Position,
-    time: Position,
+    title: Position,
     instructionTop1: Position,
     instructionTop2: Position,
     hint: Position,
     instructionBottom: Position,
     countdown: Position,
     letsgo: Position,
+    yes: Position,
+    no: Position,
     danceButtons: Position,
     meter: Position,
     startOffset: Position

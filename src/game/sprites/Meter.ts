@@ -29,8 +29,11 @@ export default class Meter extends GameObjects.Container {
         this.indicator.setOrigin(0.5, 0);
         this.indicator.setRotation(Math.PI);        // needs to be rotated otherwise it fills up from the top down
 
+        // create the mini robot
+        const miniRobot = new GameObjects.Image(scene, 0, - meterHousing.displayHeight / 2 - 15, 'miniRobot').setOrigin(0.5, 1);
+
         // add both images to the container
-        this.add([meterBackground, this.indicator, meterHousing]);
+        this.add([meterBackground, this.indicator, meterHousing, miniRobot]);
 
         // set the indicator
         this.setIndicator();
@@ -55,8 +58,11 @@ export default class Meter extends GameObjects.Container {
             this.value += gameOptions.meterParameters.wrongFactor
         }
 
-        if (this.value > gameOptions.meterParameters.maximum) {
+        if (this.value >= gameOptions.meterParameters.maximum) {
             this.value = gameOptions.meterParameters.maximum;
+
+            this.scene.events.emit('exposed');          // emit an event that the human was exposed, when the value of the meter is higher than the maximum
+
         }
         else if (this.value < 0) {
             this.value = 0;

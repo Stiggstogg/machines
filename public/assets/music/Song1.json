@@ -2,22 +2,22 @@
     {
       "albumName": "album1",
       "trackName": "0",
-      "lightColors": ["0", "1"]
-    },
-    {
-      "albumName": "album1",
-      "trackName": "1",
-      "lightColors": ["2", "3"]
-    },
-    {
-      "albumName": "album1",
-      "trackName": "2",
       "lightColors": ["0", "0"]
     },
     {
       "albumName": "album1",
+      "trackName": "1",
+      "lightColors": ["0", "1"]
+    },
+    {
+      "albumName": "album1",
+      "trackName": "2",
+      "lightColors": ["0", "2"]
+    },
+    {
+      "albumName": "album1",
       "trackName": "3",
-      "lightColors": ["3", "3"]
+      "lightColors": ["0", "3"]
     }
   ]
 }

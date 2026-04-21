@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import {Dancer} from './Dancer.ts';
 import {Pattern, RuleSet} from '../helper/types.ts';
+import gameOptions from '../helper/gameOptions.ts';
 
 // Human class
 export class Human extends Dancer {
@@ -30,6 +31,17 @@ export class Human extends Dancer {
     // check if the human dances according to the rules
     isHumanDancingCorrectly(currentPattern: Pattern): boolean {
         return this.getCurrentDanceKey() === this.getExpectedDanceKey(currentPattern);
+    }
+
+    // do the win dance
+    danceWin() {
+
+        this.play({
+            key: 'human-win',
+            frameRate: gameOptions.winDanceBPM / 60 * 2,
+            repeat: -1
+        });
+
     }
 
 }

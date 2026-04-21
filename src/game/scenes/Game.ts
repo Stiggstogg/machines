@@ -9,6 +9,7 @@ import Meter from '../sprites/Meter.ts';
 import {GameState} from '../helper/enums.ts';
 import gameOptions from '../helper/gameOptions.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
+import ProgressBar from '../sprites/ProgressBar.ts';
 
 export class Game extends Scene
 {
@@ -20,9 +21,12 @@ export class Game extends Scene
     private hint: string;
     private timeValue: string;
     private bpm: number;
+    private robotSong: string;
+    private humanSong: string;
 
     // main scene objects
     private floor: GameObjects.Sprite;
+    private progressBar: ProgressBar;
     private human: Human;
     private robot: Robot;
     private lightLeft: Light;
@@ -30,7 +34,7 @@ export class Game extends Scene
     private musicLightPlayer: MusicLightPlayer;
 
     // text
-    private timeText: GameObjects.Text;
+    private titleText: GameObjects.Text;
     private instructionTextTop1: GameObjects.Text;
     private instructionTextTop2: GameObjects.Text;
     private countdownText: GameObjects.Text;
@@ -41,6 +45,8 @@ export class Game extends Scene
     private positionsUI: UIPositions;
     private danceButtons: DanceButton[];
     private letsgoButton: GeneralButton;
+    private yesButton: GeneralButton;
+    private noButton: GeneralButton;
     private meter: Meter;
 
     
@@ -67,19 +73,24 @@ export class Game extends Scene
         this.timeValue = this.cache.json.get(this.levelKey).level.time as string;
         this.hint = this.cache.json.get(this.levelKey).level.hint as string;
         this.bpm = Number(this.cache.json.get(this.levelKey).level.bpm as string);
+        this.robotSong = this.cache.json.get(this.levelKey).level.robotSong as string;
+        this.humanSong = this.cache.json.get(this.levelKey).level.humanSong as string;
 
         // define FINAL positions for objects in the scene
         const middle = 0.5 * this.scale.width;
+        const buttonY = 0.93 * this.scale.height;
 
         this.positionsUI = {
             humanRobot: {x: middle, y: 0.77 * this.scale.height},
-            time: {x: middle, y: 0.01 * this.scale.height},
+            title: {x: middle, y: 0.025 * this.scale.height},
             instructionTop1: {x: middle, y: 0.09 * this.scale.height},
             instructionTop2: {x: middle, y: 0.14 * this.scale.height},
             hint: {x: middle, y: 0.20 * this.scale.height},
             countdown: {x: middle, y: 0.14 * this.scale.height},
             instructionBottom: {x: middle, y: 0.83 * this.scale.height},
-            letsgo: {x: middle, y: 0.93 * this.scale.height},
+            letsgo: {x: middle, y:buttonY},
+            yes: {x: this.scale.width * 0.25, y: buttonY},
+            no: {x: this.scale.width * 0.75, y: buttonY},
             danceButtons: {x: this.scale.width * 0.167, y: this.scale.height * 0.93},
             meter: {x: this.scale.width * 0.92, y: this.scale.height * 0.6},
             startOffset: {x: this.scale.width, y: 0.2 * this.scale.height},         // offset to the final position and the position from / to where the tween is coming / going
@@ -88,6 +99,7 @@ export class Game extends Scene
         // place basic objects
         this.floor = this.add.sprite(0, this.scale.height,'floor');     // add floor
         this.floor.setOrigin(0, 1);
+        this.progressBar = this.add.existing(new ProgressBar(this, this.scale.width * 0.5, this.scale.height * 0.02));
 
         // add holder for lights
         const holderXPosition = 0.10;    // holder position from nearest edge
@@ -105,19 +117,30 @@ export class Game extends Scene
         this.lightLeft = this.add.existing(new Light(this, leftHolder.x, leftHolder.y, true, this.bpm));
         this.lightRight = this.add.existing(new Light(this, rightHolder.x, rightHolder.y, false, this.bpm));
 
+        // setup the music player
+        this.musicLightPlayer = new MusicLightPlayer(this, [this.lightLeft, this.lightRight], this.progressBar, this.bpm);
+
+        // add the lose and win condition event listeners
+        this.events.once('exposed', () => {
+           console.log('Exposed!');
+        });
+
+        this.events.once('humanSongOver', () =>{
+            this.startWin();
+        });
+
         // start the OBSERVE part
         this.startObserve();
-
-
-        // play song
-        this.musicLightPlayer = new MusicLightPlayer(this, [this.lightLeft, this.lightRight]);
-        this.musicLightPlayer.loadSong('song1');
-        this.musicLightPlayer.playSong();
 
     }
 
     // Update function for the game loop.
     update(_time: number, _delta: number): void {       // remove underscore if time and delta is needed
+
+        // update the progress bar if the state is OBSERVE, OBSERVE_TRANSITION, DANCE
+        if (this.state == GameState.OBSERVE || GameState.OBSERVE_TRANSITION || GameState.DANCE) {
+            this.progressBar.update();
+        }
 
         if (this.state === GameState.OBSERVE) {
             this.robot.danceAccordingToRules(this.musicLightPlayer.getCurrentPattern());
@@ -138,11 +161,15 @@ export class Game extends Scene
     // Start the observe part
     startObserve() {
 
+        // start the robot song
+        this.musicLightPlayer.loadSong(this.robotSong, false);
+        this.musicLightPlayer.playSong();
+
         // add robot
         this.robot = this.add.existing(new Robot(this, this.positionsUI.humanRobot.x, this.positionsUI.humanRobot.y, this.ruleSet, this.bpm));
 
         // add texts
-        this.timeText = this.add.text(this.positionsUI.time.x, this.positionsUI.time.y - this.positionsUI.startOffset.y, this.timeValue, gameOptions.clockTextStyle).setOrigin(0.5, 0);
+        this.titleText = this.add.text(this.positionsUI.title.x, this.positionsUI.title.y - this.positionsUI.startOffset.y, 'Song ' + this.level + '/' + gameOptions.maxLevel, gameOptions.titleTextStyle).setOrigin(0.5, 0);
         this.instructionTextTop1 = this.add.text(this.positionsUI.instructionTop1.x + this.positionsUI.startOffset.x, this.positionsUI.instructionTop1.y, 'Watch the Robot Dance', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
         this.instructionTextTop2 = this.add.text(this.positionsUI.instructionTop2.x - this.positionsUI.startOffset.x, this.positionsUI.instructionTop2.y, 'Find the Dance Pattern', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
         this.hintText = this.add.text(this.positionsUI.hint.x, this.positionsUI.hint.y, this.hint, gameOptions.hintTextStyle).setOrigin(0.5, 0).setAlpha(0);
@@ -154,13 +181,17 @@ export class Game extends Scene
             this.startDance();
         });
 
+        // create the yes / no buttons (not used in this scene but in later scenes)
+        this.yesButton = this.add.existing(new GeneralButton(this, this.positionsUI.yes.x, this.positionsUI.yes.y + this.positionsUI.startOffset.y, 'Yes!', 'yes'));
+        this.noButton = this.add.existing(new GeneralButton(this, this.positionsUI.no.x, this.positionsUI.no.y + this.positionsUI.startOffset.y, 'No', 'no'));
+
         // timeline for the tweens
         this.add.timeline([
             {
                 at: 0,
                 tween: {
-                    targets: this.timeText,
-                    y: this.positionsUI.time.y,
+                    targets: this.titleText,
+                    y: this.positionsUI.title.y,
                     ease: 'Cubic.easeOut',
                     duration: 500
                 }
@@ -227,18 +258,18 @@ export class Game extends Scene
         })
 
         // add the meter
-        this.meter = this.add.existing(new Meter(this, this.positionsUI.meter.x + this.positionsUI.startOffset.x, this.positionsUI.meter.y));
+        this.meter = this.add.existing(new Meter(this, this.positionsUI.meter.x + this.positionsUI.startOffset.x / 5, this.positionsUI.meter.y));
 
         // add countdown
-        this.countdownText = this.add.text(this.positionsUI.countdown.x, this.positionsUI.countdown.y, '4', gameOptions.instructionTextStyle).setScale(0);
+        this.countdownText = this.add.text(this.positionsUI.countdown.x, this.positionsUI.countdown.y, '4', gameOptions.instructionTextStyle).setScale(0).setOrigin(0.5, 0);
 
         // timeline for the tweens
         this.add.timeline([
             {                                                                           // Move all UI elements from the OBSERVE part out
                 at: 0,
                 tween: {
-                    targets: this.timeText,
-                    y: this.positionsUI.time.y - this.positionsUI.startOffset.y,
+                    targets: this.titleText,
+                    y: this.positionsUI.title.y - this.positionsUI.startOffset.y,
                     ease: 'Cubic.easeIn',
                     duration: 500
                 }
@@ -310,37 +341,284 @@ export class Game extends Scene
             {
                 from: 2000,
                 run: () => {
-                    this.musicLightPlayer.loadSong('song2');                        // TODO: this is currently static, replace with a dynamic key
-                    this.events.once('newSongSection', () => {                  // Show the countdown when the
-                        this.startCountDown();
+
+                    // set the new song (it will start to play as soon as the current section is finished
+                    this.musicLightPlayer.loadSong(this.humanSong, true);
+
+                    // set the "Are you ready?" text
+                    this.instructionTextTop1.setText('Are You Ready?');
+
+                    // let the human do the idle dance
+                    this.human.dance('idle');
+
+                    // bring in the buttons and meter
+                    this.tweens.add({
+                        targets: this.danceButtons,
+                        y: this.positionsUI.danceButtons.y,
+                        ease: 'Cubic.easeIn',
+                        duration: 500
                     });
+
+                    this.tweens.add({
+                        targets: this.meter,
+                        x: this.positionsUI.meter.x,
+                        ease: 'Cubic.easeIn',
+                        duration: 500
+                    });
+
+                    // Show the countdown when the new section starts
+                    this.events.once('newSongSection', () => {
+
+                        this.startCountDown();
+
+                        // switch to the "DANCE" state as soon as the next song section starts
+                        this.events.once('newSongSection', () => {
+
+                            // remove the "Are you ready?" text (by moving it out screen)
+                            this.instructionTextTop1.setX(this.positionsUI.instructionTop1.x + this.positionsUI.startOffset.x);
+
+                            // change to the dance state
+                            this.state = GameState.DANCE;           // switch to the "DANCE" game state
+
+                        });
+
+                    });
+
+                },
+                tween: {
+                    targets: this.instructionTextTop1,
+                    x: {
+                        from: this.positionsUI.instructionTop1.x + this.positionsUI.startOffset.x,
+                        to: this.positionsUI.instructionTop1.x,
+                        ease: 'Back.easeOut',
+                        duration: 700
+                    },
+                    ease: 'Back.easeIn',
+                    duration: 700
                 }
             }
         ]).play();
 
     }
 
+    startWin() {
+
+        // change to the WIN state
+        this.state = GameState.WIN;
+
+        // start the human win dance animation
+        this.human.danceWin();
+
+        // play the win music
+        const winAudio = this.sound.add('win', {
+            loop: true
+        }).play();
+
+        // add the event listener for the "Yes" button
+        this.events.once('click-yes', () => {
+            this.startNextScene();
+        })
+
+        // Stop the light rotation and flicker the two lights
+        this.lightLeft.rotateLightStop();
+        this.lightRight.rotateLightStop();
+        this.lightLeft.flickerStart(0);
+        this.lightRight.flickerStart(2);
+
+        // start a timeline to remove all parts of the previous scene and add all parts of this scene
+        this.add.timeline([
+            {                                                                           // move meter out and remove progress bar
+                at: 0,
+                tween: {
+                    targets: this.meter,
+                    x: this.positionsUI.meter.x + this.positionsUI.startOffset.x / 5,
+                    ease: 'Cubic.easeOut',
+                    duration: 500
+                },
+                run: () => {
+                    this.progressBar.destroy();                                         // remove progress bar
+                }
+            },
+            {                                                                           // move buttons out
+                from: 0,
+                tween: {
+                    targets: this.danceButtons,
+                    y: this.positionsUI.danceButtons.y + this.positionsUI.startOffset.y,
+                    ease: 'Cubic.easeOut',
+                    duration: 500
+                }
+            },
+            {                                                                           // move title in
+                from: 0,
+                tween: {
+                    targets: this.titleText,
+                    y: this.positionsUI.title.y,
+                    ease: 'Cubic.easeOut',
+                    duration: 500
+                }
+            },
+            {                                                                           // move instruction texts in
+                from: 300,
+                run: () => {
+                    this.instructionTextTop1.setText('You Made It!');
+                    this.instructionTextTop2.setText('You Danced Like a Robot');
+                },
+                tween: {
+                    targets: [this.instructionTextTop1, this.instructionTextTop2],
+                    x: this.positionsUI.instructionTop1.x,
+                    ease: 'Back.easeOut',
+                    duration: 700
+                }
+            },
+            {                                                                           // move question text in
+                from: 300,
+                tween: {
+                    targets: this.instructionTextBottom,
+                    y: this.positionsUI.instructionBottom.y,
+                    ease: 'Cubic.easeOut',
+                    duration: 500
+                },
+                run: () => {
+                    this.instructionTextBottom.setText('Ready for the next Song?')
+                }
+            },
+            {                                                                           // move in yes or no buttons
+                from: 0,
+                tween: {
+                    targets: [this.yesButton, this.noButton],
+                    y: this.positionsUI.yes.y,
+                    ease: 'Cubic.easeOut',
+                    duration: 500
+                }
+            },
+
+        ]).play();
+
+
+    }
+
+    startExposed() {
+
+    }
+
+    // move all objects out and fade out into next scene
+    startNextScene() {
+
+        // fade out the scene
+        this.cameras.main.fade(500);
+
+        // stop all audio
+        this.sound.stopAll();
+
+        // change to the next scene when the camera fade out is complete
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+
+            if (this.state === GameState.WIN) {
+                console.log('next level');      // TODO: finalize this as soon as more levels are available
+                this.scene.start('Game', {level: this.level}); // TODO: add here the next level as soon as more levels are available
+            }
+            else {
+                console.log('same level');      // finalize this as soon as more levels are available
+                this.scene.start('Game', {level: this.level});
+            }
+
+        });
+
+        // move all objects out using a timeline
+        this.add.timeline([
+            {
+                at: 0,
+                tween: {
+                    targets: this.titleText,
+                    y: this.positionsUI.title.y - this.positionsUI.startOffset.y,
+                    ease: 'Cubic.easeIn',
+                    duration: 500
+                }
+            },
+            {
+                from: 0,
+                tween: {
+                    targets: this.instructionTextTop1,
+                    x: this.positionsUI.instructionTop1.x + this.positionsUI.startOffset.x,
+                    ease: 'Back.easeIn',
+                    duration: 700
+                }
+            },
+            {
+                from: 0,
+                tween: {
+                    targets: this.instructionTextTop2,
+                    x: this.positionsUI.instructionTop2.x - this.positionsUI.startOffset.x,
+                    ease: 'Back.easeIn',
+                    duration: 700
+                }
+            },
+            {
+                from: 0,
+                tween: {
+                    targets: [this.hintText],
+                    alpha: 0,
+                    duration: 500
+                }
+            },
+            {
+                from: 0,
+                tween: {
+                    targets: this.instructionTextBottom,
+                    y: this.positionsUI.instructionBottom.y + this.positionsUI.startOffset.y,
+                    ease: 'Cubic.easeIn',
+                    duration: 500
+                }
+            },
+            {
+                from: 0,
+                tween: {
+                    targets: [this.letsgoButton,this.yesButton, this.noButton],
+                    y: this.positionsUI.letsgo.y + this.positionsUI.startOffset.y,
+                    ease: 'Cubic.easeIn',
+                    duration: 500
+                },
+                run: () => {
+
+                    // disable all buttons
+                    this.letsgoButton.disableInteractive();
+                    this.yesButton.disableInteractive();
+                    this.noButton.disableInteractive();
+                }
+            },
+        ]).play();
+
+    }
+
+    // start the countdown
     startCountDown() {
 
         // create the countdown tween
         const tweenCountdown = this.tweens.add({
             targets: this.countdownText,
             duration: 1000 / (this.bpm / 60) * 2,
-            scale: 1,
-            ease: 'Cubic.Out',
-            paused: false,
-            onStart: () => {
-
-                // get number
-                const countNumber: number = Number(this.countdownText.text);
+            scale: {
+                from: 0,
+                to: 1
             },
+            ease: 'Expo.Out',
+            paused: false,
             onComplete: () => {
 
                 // get number
                 const countNumber: number = Number(this.countdownText.text);
 
-                if (countNumber > 0) {
-                    this.countdownText.setText((countNumber - 1).toString());
+                if (!isNaN(countNumber)) {
+
+                    if (countNumber === 1) {
+
+                        this.countdownText.setText('DANCE!');
+
+                    }
+                    else {
+                        this.countdownText.setText((countNumber - 1).toString());
+                    }
+
                     tweenCountdown.play();
                 }
                 else {
@@ -354,4 +632,6 @@ export class Game extends Scene
         });
 
     }
+
+
 }
