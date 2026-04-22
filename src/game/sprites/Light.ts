@@ -6,6 +6,7 @@ export class Light extends GameObjects.Sprite {
 
     private readonly left: boolean          // if this is true then it is the left light, otherwise the right
     private readonly rotationTween: Tweens.Tween
+    private readonly rotationDirection: number;
     private isFlickering: boolean                // flag if the lights are flickering
     private flickerColorNumber: number;
     private flickerTimer?: Time.TimerEvent;
@@ -22,7 +23,7 @@ export class Light extends GameObjects.Sprite {
         // set the rotation direction and speed
         const holderXPosition = 25;
 
-        let rotationDirection = 1;
+        this.rotationDirection = 1;
         let rotationSpeed = bpm / 60 / 2;      // rotation speed of the left light (right light is half as fast); speed represents how many times the light moves up and down per second;
 
         if (this.left) {
@@ -31,18 +32,18 @@ export class Light extends GameObjects.Sprite {
         else {
             this.setOrigin(1 - holderXPosition / this.displayWidth, 0.5);
             this.setFlipX(true);
-            rotationDirection = -1;
+            this.rotationDirection = -1;
             rotationSpeed = rotationSpeed / 2;
         }
 
-        this.setRotation(MathPhaser.DegToRad(rotationDirection * 20));
+        this.setRotation(MathPhaser.DegToRad(this.rotationDirection * 20));
 
         // create tween to move the lights up and down
         this.rotationTween = this.scene.tweens.add({
             targets: this,
             rotation: {
-                from: MathPhaser.DegToRad(rotationDirection * 20),
-                to: MathPhaser.DegToRad(rotationDirection * 75)
+                from: MathPhaser.DegToRad(this.rotationDirection * 20),
+                to: MathPhaser.DegToRad(this.rotationDirection * 75)
             },
             ease: 'Sine.easeInOut',
             yoyo: true,
@@ -126,6 +127,21 @@ export class Light extends GameObjects.Sprite {
         this.flickerTimer?.remove();
 
         this.flickerTimer = undefined;
+
+    }
+
+    // put something into the spotlight
+    putIntoSpotlight() {
+
+        this.color(gameOptions.spotlightColor);
+
+        let spotlightAngle = 40;
+
+        if (!this.left) {
+            spotlightAngle = 50;
+        }
+
+        this.setRotation(MathPhaser.DegToRad(this.rotationDirection * spotlightAngle));
 
     }
 

@@ -74,8 +74,8 @@ export class Preloader extends Scene
         this.load.json('level1', 'levels/level1.json');
 
         // fonts
-        this.load.font('Bitcount', 'fonts/BitcountSingle.ttf' , 'truetype');
         this.load.font('Asimovian', 'fonts/Asimovian-Regular.ttf' , 'truetype');
+        this.load.font('Monoton', 'fonts/Monoton-Regular.ttf' , 'truetype');
 
     }
 
@@ -89,8 +89,8 @@ export class Preloader extends Scene
         this.anims.createFromAseprite('robot');
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        //this.scene.start('MainMenu');
-        this.scene.start('Game', {level: 1});       // TODO: Remove and change here again to the main menu, this is only for faster developement
+        this.scene.start('MainMenu');
+        //this.scene.start('Game', {level: 1});       // TODO: Remove and change here again to the main menu, this is only for faster developement
 
     }
 }

@@ -9,11 +9,14 @@ type GameOptions = {
     readonly gameTitle: string;
     readonly maxLevel: number;
     readonly lightColors: number[];
+    readonly spotlightColor: number;
     readonly danceKeysForButtons: string[];
     readonly meterParameters: MeterParameters;
     readonly barsPerTrack: number;
     readonly winDanceBPM: number;
+    readonly loseDanceBPM: number;
 
+    readonly gameTitleTextStyle: Types.GameObjects.Text.TextStyle;
     readonly titleTextStyle: Types.GameObjects.Text.TextStyle;
     readonly instructionTextStyle: Types.GameObjects.Text.TextStyle;
     readonly hintTextStyle: Types.GameObjects.Text.TextStyle;
@@ -21,7 +24,7 @@ type GameOptions = {
 };
 
 const gameOptions: GameOptions = {
-    gameTitle: 'My Game',
+    gameTitle: 'MACHINE DISCO',
     maxLevel: 10,
     lightColors: [
         0x000000,
@@ -29,6 +32,7 @@ const gameOptions: GameOptions = {
         0xfbf236,
         0xdf7126
     ],
+    spotlightColor: 0xfbf236,           // color of the spotlight when you lose
     danceKeysForButtons: [
         'dance1',
         'idle',
@@ -41,7 +45,16 @@ const gameOptions: GameOptions = {
     },
     barsPerTrack: 2,            // how many bars does each track on an album have
     winDanceBPM: 160,           // bpm of the win dance
+    loseDanceBPM: 160,          // bpm of the lose dance
 
+    gameTitleTextStyle:
+        {
+            fontFamily: 'Monoton',
+            fontSize: '60px',
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 4
+        },
     titleTextStyle:
         {
             fontFamily: 'Asimovian',

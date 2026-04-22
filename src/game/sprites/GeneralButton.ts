@@ -33,4 +33,11 @@ export class GeneralButton extends GameObjects.Container {
         // this.scene.sound.play('click');          // TODO: add click sound
     }
 
+    // Change the button text
+    changeText(text: string) {
+
+        this.text.setText(text);
+
+    }
+
 }

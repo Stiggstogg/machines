@@ -64,7 +64,7 @@ export class MusicLightPlayer {
         // stop the current audio in case it exists
         this.currentAudio?.stop();
 
-        // check if this is would be the second playthrough of the human song. If yes, stop the player.
+        // check if this would be the second playthrough of the human song. If yes, stop the player.
         if (this.isHumanSong && this.loop > 0) {
 
             // emit an event that can be used to check if the game is finished (in the DANCE state)
@@ -129,6 +129,16 @@ export class MusicLightPlayer {
         
     }
 
+    // immediately stop the current song and prevent that a new one is started
+    stopSong() {
+
+        // remove the event listener to start the next section
+        this.currentAudio.off('complete');
+
+        // turn of the current audio
+        this.currentAudio.stop();
+
+    }
     // get current pattern
     getCurrentPattern(): Pattern {
         return this.currentPattern;

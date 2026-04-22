@@ -1,4 +1,4 @@
-import {GameObjects} from 'phaser';
+import {GameObjects, Math as MathPhaser} from 'phaser';
 import gameOptions from '../helper/gameOptions.ts';
 
 // the meter which keeps track and shows the suspicion value
@@ -52,23 +52,18 @@ export default class Meter extends GameObjects.Container {
     setValue(isCorrect: boolean) {
 
         if (isCorrect) {
-            this.value += gameOptions.meterParameters.correctFactor
+            this.value = MathPhaser.Clamp(this.value + gameOptions.meterParameters.correctFactor, 0, gameOptions.meterParameters.maximum);        // calculate the new value
         }
         else {
-            this.value += gameOptions.meterParameters.wrongFactor
-        }
-
-        if (this.value >= gameOptions.meterParameters.maximum) {
-            this.value = gameOptions.meterParameters.maximum;
-
-            this.scene.events.emit('exposed');          // emit an event that the human was exposed, when the value of the meter is higher than the maximum
-
-        }
-        else if (this.value < 0) {
-            this.value = 0;
+            this.value = MathPhaser.Clamp(this.value + gameOptions.meterParameters.wrongFactor, 0, gameOptions.meterParameters.maximum);        // calculate the new valuegameOptions.meterParameters.wrongFactor
         }
 
         this.setIndicator();
+
+        // return the 'meterFull' event if the meter is full
+        if (this.value >= gameOptions.meterParameters.maximum) {
+            this.scene.events.emit('meterFull');
+        }
 
     }
 

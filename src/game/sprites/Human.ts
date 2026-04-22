@@ -33,15 +33,4 @@ export class Human extends Dancer {
         return this.getCurrentDanceKey() === this.getExpectedDanceKey(currentPattern);
     }
 
-    // do the win dance
-    danceWin() {
-
-        this.play({
-            key: 'human-win',
-            frameRate: gameOptions.winDanceBPM / 60 * 2,
-            repeat: -1
-        });
-
-    }
-
 }

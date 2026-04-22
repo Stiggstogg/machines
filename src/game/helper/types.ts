@@ -32,7 +32,7 @@ export interface GameSceneData {
 }
 
 // UI positions
-interface Position {
+export interface Position {
     x: number;
     y: number;
 }
@@ -45,7 +45,7 @@ export interface UIPositions {
     hint: Position,
     instructionBottom: Position,
     countdown: Position,
-    letsgo: Position,
+    ok: Position,
     yes: Position,
     no: Position,
     danceButtons: Position,

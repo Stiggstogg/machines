@@ -25,11 +25,54 @@ export class Dancer extends GameObjects.Sprite {
     // Change the dance animation
     dance(danceKey: string): void {
 
-        let animationKey = this.animationPrefix + danceKey;    // to make the animations globally unique, a prefix was added for the human and the robot
+        const animationKey = this.animationPrefix + danceKey;    // to make the animations globally unique, a prefix was added for the human and the robot
 
         if (this.anims.getName() !== animationKey || !this.anims.isPlaying) {
             this.play({key: animationKey, frameRate: this.frameRate, repeat: -1});
         }
+
+    }
+
+    // do the win dance
+    danceWin() {
+
+        const animationKey = this.animationPrefix + 'win';
+
+        this.play({
+            key: animationKey,
+            frameRate: gameOptions.winDanceBPM / 60 * 2,
+            repeat: -1
+        });
+
+    }
+
+    // do the lose dance
+    danceLose() {
+
+        const animationKey = this.animationPrefix + 'idle';
+
+        this.play({
+            key: animationKey,
+            frameRate: gameOptions.loseDanceBPM / 60 * 2,
+            repeat: -1
+        });
+
+    }
+
+    // show a specific frame of the lose frames
+    frameLose(frameNumber: number) {
+
+        // stop any running animations
+        this.stop();
+
+        // derive the animation key
+        const animationKey = this.animationPrefix + 'lose';
+
+        // get the full lose animation
+        const animation = this.scene.anims.get(animationKey);
+
+        // set the frame to the specified number of the lose animation
+        this.setFrame(animation.frames[frameNumber].textureFrame);
 
     }
 
@@ -73,6 +116,18 @@ export class Dancer extends GameObjects.Sprite {
 
         // if no rule matched, return idle animation
         return 'idle'
+
+    }
+
+    // change origin of Y without changing the position
+    changeOriginY(newOriginY: number) {
+
+        // adjust position
+        const changeY = newOriginY - this.originY;
+        this.setY(this.y + changeY * this.displayHeight);
+
+        // set the new
+        this.setOrigin(this.originX, newOriginY);
 
     }
 

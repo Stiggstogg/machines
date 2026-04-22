@@ -4,6 +4,6 @@ export enum GameState {
     OBSERVE = 'observe',
     OBSERVE_TRANSITION = 'observe_transition',
     DANCE = 'dance',
-    KICKOUT = 'kickout',
+    LOSE = 'lose',
     WIN = 'win'
 }
