@@ -5,6 +5,8 @@ import { AUTO, Game, Scale } from 'phaser';
 import { Boot } from './scenes/Boot';
 import { Preloader } from './scenes/Preloader';
 import { MainMenu } from './scenes/MainMenu';
+import {Credits} from './scenes/Credits.ts';
+import {Intro} from './scenes/Intro.ts';
 import {Game as MainGame} from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 
@@ -36,6 +38,8 @@ const config: Phaser.Types.Core.GameConfig = {
         Boot,
         Preloader,
         MainMenu,
+        Credits,
+        Intro,
         MainGame,
         GameOver
     ]

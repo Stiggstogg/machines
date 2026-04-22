@@ -13,6 +13,7 @@ type GameOptions = {
     readonly danceKeysForButtons: string[];
     readonly meterParameters: MeterParameters;
     readonly barsPerTrack: number;
+    readonly menuDanceBPM: number;
     readonly winDanceBPM: number;
     readonly loseDanceBPM: number;
 
@@ -20,6 +21,7 @@ type GameOptions = {
     readonly titleTextStyle: Types.GameObjects.Text.TextStyle;
     readonly instructionTextStyle: Types.GameObjects.Text.TextStyle;
     readonly hintTextStyle: Types.GameObjects.Text.TextStyle;
+    readonly smallTextStyle: Types.GameObjects.Text.TextStyle;
     readonly buttonTextStyle: Types.GameObjects.Text.TextStyle;
 };
 
@@ -44,6 +46,7 @@ const gameOptions: GameOptions = {
         correctFactor: -0.2,    // how much the meter value increases (negative -> decrease) per frame if the human dances correctly
     },
     barsPerTrack: 2,            // how many bars does each track on an album have
+    menuDanceBPM: 160,           // bpm of the menu music
     winDanceBPM: 160,           // bpm of the win dance
     loseDanceBPM: 160,          // bpm of the lose dance
 
@@ -75,6 +78,14 @@ const gameOptions: GameOptions = {
         {
             fontFamily: 'Asimovian',
             fontSize: '28px',
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 4
+        },
+    smallTextStyle:
+        {
+            fontFamily: 'Asimovian',
+            fontSize: '20px',
             color: '#ffffff',
             stroke: '#000000',
             strokeThickness: 4

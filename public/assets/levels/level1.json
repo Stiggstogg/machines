@@ -8,13 +8,33 @@
     "ruleSet": [
       {
         "albumName": "album1",
-        "trackName": null,
+        "trackName": "0",
         "lightColors": [
           null,
-          "3"
+          null
+        ],
+        "lightsInSync": null,
+        "danceKey": "idle"
+      },
+      {
+        "albumName": "album1",
+        "trackName": "1",
+        "lightColors": [
+          null,
+          null
         ],
         "lightsInSync": null,
         "danceKey": "dance1"
+      },
+      {
+        "albumName": "album1",
+        "trackName": "2",
+        "lightColors": [
+          null,
+          null
+        ],
+        "lightsInSync": null,
+        "danceKey": "dance2"
       }
     ]
   }

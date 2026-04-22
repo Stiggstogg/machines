@@ -61,8 +61,7 @@ export class Game extends Scene
 
     }
 
-    create ()
-    {
+    create () {
 
         // set the game state to OBSERVE
         this.state = GameState.OBSERVE;
@@ -101,7 +100,7 @@ export class Game extends Scene
 
         // add holder for lights
         const holderXPosition = 0.10;    // holder position from nearest edge
-        const holderYPosition = 0.27;    // holder position from
+        const holderYPosition = 0.27;    // holder position
         const holderYOffset = -0.05;     // the right holder is a bit higher up compared to the other
         const holderMountPosition = {x: 16, y: 52};     // position where on the holder the light is mounted, the origin of this image will be set to this coordinate
 
