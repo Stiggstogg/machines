@@ -14,6 +14,7 @@ export class Intro extends Scene
     private buttonPosition: Position;
     private buttonStartOffset: Position;
     private human: Human;
+    private mask: GameObjects.Sprite;
 
     constructor ()
     {
@@ -27,7 +28,13 @@ export class Intro extends Scene
         const floor = this.add.sprite(0, this.scale.height * 0.8,'floor');
         floor.setOrigin(0, 0);
 
+        // add human
         this.human = this.add.existing(new Human(this, this.scale.width * 0.5, this.scale.height * 0.9, [], gameOptions.menuDanceBPM));
+        this.human.showFrame('dress', 0);
+
+        // add mask
+        this.mask = this.add.sprite(this.human.x + 5, this.human.y - this.scale.height, 'mask');
+        this.mask.setOrigin(0.5, 1);
 
         // add intro text
         const creditsTextY = this.scale.height * 0.150;
@@ -41,8 +48,8 @@ export class Intro extends Scene
             'You are an old disco machine who desperately wants in. So tonight, you throw on a questionable robot disguise and sneak through the door...\n' +
             'Robots have very specific dance patterns, and they do not appreciate freestyle!\n' +
             'OBSERVE the robots, learn their pattern, then DANCE LIKE A ROBOT.\n' +
-            'Mess up too often, and you’ll be caught!\n'  +
-            'Can you survive all 5 songs?'
+            'Mess up too often, and you’ll be caught!\n\n'  +
+            'Can you get through all ' + gameOptions.maxLevel + ' songs?'
         );
 
         this.introText.setAlpha(0);
@@ -153,6 +160,34 @@ export class Intro extends Scene
                 }
             },
             {
+                from: 1000,
+                run: () => {
+                    this.human.showFrame('dress', 1);
+                }
+            },
+            {
+                from: 1000,
+                run: () => {
+                    this.human.showFrame('dress', 2);
+                }
+            },
+            {
+                from: 1000,
+                tween: {
+                    targets: this.mask,
+                    y: this.human.y - 354,
+                    ease: 'Cubic.easeOut',
+                    duration: 1000
+                }
+            },
+            {
+                from: 1000,
+                run: () => {
+                    this.mask.setVisible(false);
+                    this.human.showFrame('dress', 3);
+                }
+            },
+            {
                 from: 100,
                 tween: {
                     targets: this.titleText,
@@ -162,7 +197,7 @@ export class Intro extends Scene
                 }
             },
             {
-                at: 0,
+                from: 500,
                 run: () => {
                     this.cameras.main.fadeOut(500);
                 }

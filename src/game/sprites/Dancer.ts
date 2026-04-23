@@ -59,14 +59,14 @@ export class Dancer extends GameObjects.Sprite {
 
     }
 
-    // show a specific frame of the lose frames
-    frameLose(frameNumber: number) {
+    // show a specific frame of a specific animation
+    showFrame(targetAnimation: string, frameNumber: number) {
 
         // stop any running animations
         this.stop();
 
         // derive the animation key
-        const animationKey = this.animationPrefix + 'lose';
+        const animationKey = this.animationPrefix + targetAnimation;
 
         // get the full lose animation
         const animation = this.scene.anims.get(animationKey);

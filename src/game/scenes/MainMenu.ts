@@ -32,6 +32,7 @@ export class MainMenu extends Scene
 
         // add human
         this.human = this.add.existing(new Human(this, this.scale.width * 0.5, this.scale.height * 0.9, [], gameOptions.menuDanceBPM));
+        this.human.dance('menu');
 
         // add holder and lights
         const holderXPosition = 0.1;    // holder position from nearest edge

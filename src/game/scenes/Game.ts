@@ -786,7 +786,7 @@ export class Game extends Scene
             {
                 at: 0,
                 run: () => {
-                    this.human.frameLose(0);
+                    this.human.showFrame('lose', 0);
                 }
             },
             {
@@ -797,14 +797,14 @@ export class Game extends Scene
                     duration: 500
                 },
                 run: () => {
-                    this.robot.frameLose(0);
+                    this.robot.showFrame('lose', 0);
                 }
             },
             {
                 from: 500,
                 run: () => {
-                    this.robot.frameLose(1);
-                    this.robot.frameLose(1);
+                    this.robot.showFrame('lose', 1);
+                    this.robot.showFrame('lose', 1);
                 }
             },
             {
@@ -817,7 +817,7 @@ export class Game extends Scene
                 },
                 run: () => {
                     this.human.changeOriginY(0.5);
-                    this.robot.frameLose(2);
+                    this.robot.showFrame('lose', 2);
                 }
             },
             {
