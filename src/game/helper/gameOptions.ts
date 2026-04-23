@@ -8,6 +8,7 @@ import {MeterParameters} from './types.ts';
 type GameOptions = {
     readonly gameTitle: string;
     readonly maxLevel: number;
+    readonly gameTitleColors: string[];
     readonly lightColors: number[];
     readonly spotlightColor: number;
     readonly danceKeysForButtons: string[];
@@ -28,6 +29,10 @@ type GameOptions = {
 const gameOptions: GameOptions = {
     gameTitle: 'MACHINE DISCO',
     maxLevel: 10,
+    gameTitleColors: [
+        '#fbf236',
+        '#99e550'
+    ],
     lightColors: [
         0x000000,
         0x5b6ee1,
@@ -56,11 +61,11 @@ const gameOptions: GameOptions = {
             fontSize: '60px',
             color: '#ffffff',
             stroke: '#000000',
-            strokeThickness: 4
+            strokeThickness: 10
         },
     titleTextStyle:
         {
-            fontFamily: 'Asimovian',
+            fontFamily: 'Monoton',
             fontSize: '60px',
             color: '#ffffff',
             stroke: '#000000',

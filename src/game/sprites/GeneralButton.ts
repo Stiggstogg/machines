@@ -9,10 +9,19 @@ export class GeneralButton extends GameObjects.Container {
     private readonly id: string;
 
     // Constructor
-    constructor(scene: Scene, x: number, y: number, text: string, id: string) {
+    constructor(scene: Scene, x: number, y: number, text: string, id: string, color?: 'red' | 'green') {
 
         super(scene, x, y);
-        this.image = new GameObjects.Image(scene, 0, 0, 'squareButton');
+
+        let frame = 0;
+        if (color === 'green') {
+            frame = 1;
+        }
+        else if (color === 'red') {
+            frame = 2;
+        }
+
+        this.image = new GameObjects.Image(scene, 0, 0, 'squareButton', frame);
         this.text = new GameObjects.Text(scene, 0, 3, text, gameOptions.buttonTextStyle).setOrigin(0.5);
         this.id = id;
 

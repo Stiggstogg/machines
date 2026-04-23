@@ -1,4 +1,4 @@
-import {Scene, GameObjects, Time} from 'phaser';
+import {Scene, GameObjects, Time, Utils} from 'phaser';
 import gameOptions from "../helper/gameOptions";
 import {Position} from '../helper/types.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
@@ -65,6 +65,29 @@ export class MainMenu extends Scene
 
         this.titleText1 = this.add.text(this.titlePosition.x + this.titleStartOffset.x, this.titlePosition.y, "MACHINE", gameOptions.gameTitleTextStyle).setOrigin(0.5);
         this.titleText2 = this.add.text(this.titlePosition.x - this.titleStartOffset.x, this.titlePosition.y + titleYDistance, "DISCO", gameOptions.gameTitleTextStyle).setOrigin(0.5);
+        this.titleText1.setColor(gameOptions.gameTitleColors[0]);
+        this.titleText2.setColor(gameOptions.gameTitleColors[1]);
+
+        let titleColorCounter = 1;
+
+        this.time.addEvent({
+            startAt: 0,
+            delay: 1 / (gameOptions.menuDanceBPM / 60) * 4 * 1000,
+            loop: true,
+            callback: () => {
+
+                this.titleText1.setColor(gameOptions.gameTitleColors[titleColorCounter]);
+
+                if (titleColorCounter == 1) {
+                    titleColorCounter = 0;
+                } else {
+                    titleColorCounter = 1
+                }
+
+                this.titleText2.setColor(gameOptions.gameTitleColors[titleColorCounter]);
+
+            }
+        });
 
         // create buttons
         this.buttonPosition = {

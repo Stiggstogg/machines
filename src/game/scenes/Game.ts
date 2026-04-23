@@ -75,19 +75,19 @@ export class Game extends Scene
 
         // define FINAL positions for objects in the scene
         const middle = 0.5 * this.scale.width;
-        const buttonY = 0.93 * this.scale.height;
+        const buttonY = 0.94 * this.scale.height;
 
         this.positionsUI = {
             humanRobot: {x: middle, y: 0.77 * this.scale.height},
             title: {x: middle, y: 0.025 * this.scale.height},
-            instructionTop1: {x: middle, y: 0.09 * this.scale.height},
-            instructionTop2: {x: middle, y: 0.14 * this.scale.height},
-            hint: {x: middle, y: 0.20 * this.scale.height},
-            countdown: {x: middle, y: 0.14 * this.scale.height},
-            instructionBottom: {x: middle, y: 0.83 * this.scale.height},
+            instructionTop1: {x: middle, y: 0.11 * this.scale.height},
+            instructionTop2: {x: middle, y: 0.16 * this.scale.height},
+            hint: {x: middle, y: 0.22 * this.scale.height},
+            countdown: {x: middle, y: 0.16 * this.scale.height},
+            instructionBottom: {x: middle, y: 0.85 * this.scale.height},
             ok: {x: middle, y:buttonY},
-            yes: {x: this.scale.width * 0.25, y: buttonY},
-            no: {x: this.scale.width * 0.75, y: buttonY},
+            yes: {x: this.scale.width * 0.75, y: buttonY},
+            no: {x: this.scale.width * 0.25, y: buttonY},
             danceButtons: {x: this.scale.width * 0.167, y: this.scale.height * 0.93},
             meter: {x: this.scale.width * 0.92, y: this.scale.height * 0.6},
             startOffset: {x: this.scale.width, y: 0.2 * this.scale.height},         // offset to the final position and the position from / to where the tween is coming / going
@@ -96,6 +96,7 @@ export class Game extends Scene
         // place basic objects
         this.floor = this.add.sprite(0, this.scale.height,'floor');     // add floor
         this.floor.setOrigin(0, 1);
+        this.floor.setDepth(1);
         this.progressBar = this.add.existing(new ProgressBar(this, this.scale.width * 0.5, this.scale.height * 0.02));
 
         // add holder for lights
@@ -109,10 +110,15 @@ export class Game extends Scene
         const rightHolder = this.add.image(this.scale.width * (1 - holderXPosition), this.scale.height * (holderYPosition + holderYOffset),'holder');
         rightHolder.setFlipX(true);
         rightHolder.setOrigin(1 - holderMountPosition.x / leftHolder.displayWidth, holderMountPosition.y / leftHolder.displayHeight);
+        leftHolder.setDepth(4);
+        rightHolder.setDepth(4);
 
         // add lights
         this.lightLeft = this.add.existing(new Light(this, leftHolder.x, leftHolder.y, true, this.bpm));
         this.lightRight = this.add.existing(new Light(this, rightHolder.x, rightHolder.y, false, this.bpm));
+        this.lightLeft.setDepth(5);
+        this.lightRight.setDepth(5);
+
 
         // setup the music player
         this.musicLightPlayer = new MusicLightPlayer(this, [this.lightLeft, this.lightRight], this.progressBar, this.bpm);
@@ -121,14 +127,12 @@ export class Game extends Scene
         this.events.once('meterFull', () => {
 
             this.startLose();
-            console.log('meterFull');
 
         });
 
         this.events.once('humanSongOver', () =>{
 
             this.startWin();
-            console.log('humanSongOver');
 
         });
 
@@ -172,6 +176,7 @@ export class Game extends Scene
 
         // add robot
         this.robot = this.add.existing(new Robot(this, this.positionsUI.humanRobot.x, this.positionsUI.humanRobot.y, this.ruleSet, this.bpm));
+        this.robot.setDepth(3);
 
         // add texts
         this.titleText = this.add.text(this.positionsUI.title.x, this.positionsUI.title.y - this.positionsUI.startOffset.y, 'Song ' + this.level + '/' + gameOptions.maxLevel, gameOptions.titleTextStyle).setOrigin(0.5, 0);
@@ -180,20 +185,37 @@ export class Game extends Scene
         this.hintText = this.add.text(this.positionsUI.hint.x, this.positionsUI.hint.y, this.hint, gameOptions.hintTextStyle).setOrigin(0.5, 0).setAlpha(0);
         this.instructionTextBottom = this.add.text(this.positionsUI.instructionBottom.x, this.positionsUI.instructionBottom.y + this.positionsUI.startOffset.y, 'Are You Ready to Dance?', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
 
+        this.titleText.setDepth(7);
+        this.instructionTextTop1.setDepth(7);
+        this.instructionTextTop2.setDepth(7);
+        this.hintText.setDepth(7);
+        this.instructionTextBottom.setDepth(7);
+
         // add button
         this.okButton = this.add.existing(new GeneralButton(this, this.positionsUI.ok.x, this.positionsUI.ok.y + this.positionsUI.startOffset.y, 'Let\'s GO!', 'ok'));
         this.events.once('click-ok', () => {
             this.startDance();
         });
+        this.okButton.setDepth(6);
 
         // create the yes / no buttons (not used in this scene but in later scenes)
-        this.yesButton = this.add.existing(new GeneralButton(this, this.positionsUI.yes.x, this.positionsUI.yes.y + this.positionsUI.startOffset.y, 'Yes!', 'yes'));
-        this.noButton = this.add.existing(new GeneralButton(this, this.positionsUI.no.x, this.positionsUI.no.y + this.positionsUI.startOffset.y, 'No', 'no'));
+        this.yesButton = this.add.existing(new GeneralButton(this, this.positionsUI.yes.x, this.positionsUI.yes.y + this.positionsUI.startOffset.y, 'Yes!', 'yes', 'green'));
+        this.noButton = this.add.existing(new GeneralButton(this, this.positionsUI.no.x, this.positionsUI.no.y + this.positionsUI.startOffset.y, 'No', 'no', 'red'));
+
+        this.yesButton.setDepth(6);
+        this.noButton.setDepth(6);
+
 
         // timeline for the tweens
         this.add.timeline([
             {
                 at: 0,
+                run: () => {
+                    this.cameras.main.fadeIn(500);
+                }
+            },
+            {
+                from: 300,
                 tween: {
                     targets: this.titleText,
                     y: this.positionsUI.title.y,
@@ -248,12 +270,14 @@ export class Game extends Scene
 
         // create and add human
         this.human = this.add.existing(new Human(this, this.positionsUI.humanRobot.x - this.positionsUI.startOffset.x, this.positionsUI.humanRobot.y, this.ruleSet, this.bpm));
+        this.human.setDepth(2);
 
         // create and add buttons and meter
         this.danceButtons = [];
 
         for (let i = 0; i < 3; i++) {
             const button = this.add.existing(new DanceButton(this, this.positionsUI.danceButtons.x + i * this.scale.width * 0.333, this.positionsUI.danceButtons.y + this.positionsUI.startOffset.y, i));
+            button.setDepth(6);
             this.danceButtons.push(button);
         }
 
@@ -264,9 +288,11 @@ export class Game extends Scene
 
         // add the meter
         this.meter = this.add.existing(new Meter(this, this.positionsUI.meter.x + this.positionsUI.startOffset.x / 5, this.positionsUI.meter.y));
+        this.meter.setDepth(6);
 
         // add countdown
         this.countdownText = this.add.text(this.positionsUI.countdown.x, this.positionsUI.countdown.y, '4', gameOptions.instructionTextStyle).setScale(0).setOrigin(0.5, 0);
+        this.countdownText.setDepth(7);
 
         // timeline for the tweens
         this.add.timeline([
@@ -543,10 +569,8 @@ export class Game extends Scene
             }
             else {
                 if (this.state === GameState.WIN) {
-                    console.log('next level');      // TODO: finalize this as soon as more levels are available
-                    this.scene.start('Game', {level: this.level}); // TODO: add here the next level as soon as more levels are available
+                    this.scene.start('Game', {level: this.level + 1});
                 } else {
-                    console.log('same level');      // finalize this as soon as more levels are available
                     this.scene.start('Game', {level: this.level});
                 }
             }
@@ -793,7 +817,7 @@ export class Game extends Scene
                 from: 0,
                 tween: {
                     targets: this.robot,
-                    x: this.scale.width * 0.75,
+                    x: this.scale.width * 0.85,
                     duration: 500
                 },
                 run: () => {
@@ -801,14 +825,14 @@ export class Game extends Scene
                 }
             },
             {
-                from: 500,
+                from: 1000,
                 run: () => {
-                    this.robot.showFrame('lose', 1);
+                    this.human.showFrame('lose', 1);
                     this.robot.showFrame('lose', 1);
                 }
             },
             {
-                from: 500,
+                from: 1000,
                 tween: {
                     targets: this.human,
                     rotation: MathPhaser.DegToRad(360),
@@ -841,9 +865,7 @@ export class Game extends Scene
                     this.robot.danceLose();
                 }
             }
-            ];
-
-
+        ];
 
         return this.add.timeline(timelineConfig);
 

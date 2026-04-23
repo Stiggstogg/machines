@@ -49,12 +49,12 @@ export class Preloader extends Scene
         this.load.image('holder', 'images/holder.png');
         this.load.image('light', 'images/light.png');
         this.load.image('meter', 'images/meter.png');
-        this.load.image('squareButton', 'images/squareButton.png');
         this.load.image('miniRobot', 'images/miniRobot.png');
         this.load.image('mask', 'images/mask.png');
 
         // spritesheets
         this.load.spritesheet('roundButtons', 'images/roundButtons.png', {frameWidth: 110, margin: 3, spacing: 3});
+        this.load.spritesheet('squareButton', 'images/squareButton.png', {frameWidth: 231, frameHeight: 64, margin: 3, spacing: 3});
 
         // spritesheets (aseprite format)
         this.load.aseprite('floor', 'images/floor.png', 'images/floor.json');
