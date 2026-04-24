@@ -3,18 +3,20 @@ import gameOptions from "../helper/gameOptions";
 import {Position} from '../helper/types.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
 import {Human} from '../sprites/Human.ts';
+import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
 
 export class Intro extends Scene
 {
     private titleText: GameObjects.Text;
     private titlePosition: Position;
     private titleStartOffset: Position;
-    private introText: GameObjects.Text;
+    private introTexts: GameObjects.Text[];
     private goButton: GeneralButton;
     private buttonPosition: Position;
     private buttonStartOffset: Position;
     private human: Human;
     private mask: GameObjects.Sprite;
+    private particleEmitter: GameObjects.Particles.ParticleEmitter;
 
     constructor ()
     {
@@ -24,35 +26,63 @@ export class Intro extends Scene
     create()
     {
 
+        // add disco ball particle emitter
+        createDiscoBallParticles(this);
+
         // add floor
         const floor = this.add.sprite(0, this.scale.height * 0.8,'floor');
         floor.setOrigin(0, 0);
 
+        // add particle emitter
+        this.particleEmitter = this.add.particles(this.scale.width * 0.5, this.scale.height * 0.6, 'particle', {
+            lifespan: 1000,
+            tint: 0x9badb7,
+            speed: { min: 300, max: 400 },
+            scale: { start: 1, end: 0 },
+            emitting: false
+        });
+
         // add human
-        this.human = this.add.existing(new Human(this, this.scale.width * 0.5, this.scale.height * 0.9, [], gameOptions.menuDanceBPM));
+        this.human = this.add.existing(new Human(this, this.scale.width * 0.5, this.scale.height * -0.1, [], gameOptions.menuDanceBPM));
         this.human.showFrame('dress', 0);
 
         // add mask
         this.mask = this.add.sprite(this.human.x + 5, this.human.y - this.scale.height, 'mask');
         this.mask.setOrigin(0.5, 1);
 
-        // add intro text
-        const creditsTextY = this.scale.height * 0.150;
+        // add intro texts
+        const introTextGapY = this.scale.height * 0.03;
 
-        this.introText = this.add.text(this.scale.width * 0.05, creditsTextY, '', gameOptions.smallTextStyle).setOrigin(0, 0);
-        this.introText.setWordWrapWidth(this.scale.width * 0.9);
-
-        this.introText.setText(
-            'The year is 2036. The machines rule the world.\n' +
-            'Every night, they party at the robot-only MACHINE DISCO.\n' +
-            'You are an old disco machine who desperately wants in. So tonight, you throw on a questionable robot disguise and sneak through the door...\n' +
-            'Robots have very specific dance patterns, and they do not appreciate freestyle!\n' +
-            'OBSERVE the robots, learn their pattern, then DANCE LIKE A ROBOT.\n' +
-            'Mess up too often, and you’ll be caught!\n\n'  +
+        const introTextTexts = [
+            'The year is 2036. The machines rule the world. ' +
+            'Every night, they party at the robot-only MACHINE DISCO.',
+            'You are an old disco machine who desperately wants in. So tonight, you throw on a questionable robot disguise and sneak through the door...',
+            'Robots have very specific dance patterns, and they do not appreciate freestyle!',
+            'OBSERVE the robots, learn their pattern, then DANCE LIKE A ROBOT. ' +
+            'Mess up too often, and you’ll be caught!',
             'Can you get through all ' + gameOptions.maxLevel + ' songs?'
-        );
+        ]
 
-        this.introText.setAlpha(0);
+        this.introTexts = [];
+
+        let positionY = this.scale.height * 0.18;
+
+        for (let i = 0; i < 5; i++) {
+
+            if (i > 0) {
+                let lastText = this.introTexts[i-1];
+                positionY = lastText.y + lastText.displayHeight + introTextGapY;
+            }
+
+            let introText = this.add.text(this.scale.width * 0.02, 0, introTextTexts[i], gameOptions.smallTextStyle).setOrigin(0, 0);
+            introText.setWordWrapWidth(this.scale.width * 0.96);
+            introText.setAlpha(0);
+            introText.setY(positionY);
+
+            this.introTexts.push(introText);
+
+        }
+
 
         // create title texts
         this.titlePosition = {
@@ -123,20 +153,52 @@ export class Intro extends Scene
             {
                 from: 500,
                 tween: {
+                    targets: this.introTexts[0],
+                    alpha: 1,
+                    duration: 500
+                }
+            },
+            {
+                from: 500,
+                tween: {
+                    targets: this.introTexts[1],
+                    alpha: 1,
+                    duration: 500
+                }
+            },
+            {
+                from: 500,
+                tween: {
+                    targets: this.introTexts[2],
+                    alpha: 1,
+                    duration: 500
+                }
+            },
+            {
+                from: 500,
+                tween: {
+                    targets: this.introTexts[3],
+                    alpha: 1,
+                    duration: 500
+                }
+            },
+            {
+                from: 500,
+                tween: {
+                    targets: this.introTexts[4],
+                    alpha: 1,
+                    duration: 500
+                }
+            },
+            {
+                from: 500,
+                tween: {
                     targets: this.goButton,
                     y: this.buttonPosition.y,
                     ease: 'Cubic.easeOut',
                     duration: 500
                 }
             },
-            {
-                from: 0,
-                tween: {
-                    targets: this.introText,
-                    alpha: 1,
-                    duration: 500
-                }
-            }
         ];
 
         return this.add.timeline(timelineConfig);
@@ -153,35 +215,76 @@ export class Intro extends Scene
                 tween: {
                     targets: this.goButton,
                     y: this.buttonPosition.y + this.buttonStartOffset.y,
-                    ease: 'Cubic.easeOut',
+                    ease: 'Cubic.easeIn',
                     duration: 500
                 }
             },
             {
                 from: 0,
                 tween: {
-                    targets: this.introText,
+                    targets: this.introTexts[0],
                     alpha: 0,
                     duration: 500
                 }
             },
             {
-                from: 1000,
+                from: 250,
+                tween: {
+                    targets: this.introTexts[1],
+                    alpha: 0,
+                    duration: 500
+                }
+            },
+            {
+                from: 250,
+                tween: {
+                    targets: this.introTexts[2],
+                    alpha: 0,
+                    duration: 500
+                }
+            },
+            {
+                from: 250,
+                tween: {
+                    targets: this.introTexts[3],
+                    alpha: 0,
+                    duration: 500
+                }
+            },
+            {
+                from: 250,
+                tween: {
+                    targets: this.introTexts[4],
+                    alpha: 0,
+                    duration: 500
+                }
+            },
+            {
+              from: 500,
+              tween: {
+                  targets: this.human,
+                  y: this.scale.height * 0.9,
+                  ease: 'Cubic.easeOut',
+                  duration: 1000
+              }
+            },
+            {
+                from: 1500,
+                run: () => {
+                    this.particleEmitter.explode(50);
+                }
+            },
+            {
+                from: 500,
                 run: () => {
                     this.human.showFrame('dress', 1);
                 }
             },
             {
                 from: 1000,
-                run: () => {
-                    this.human.showFrame('dress', 2);
-                }
-            },
-            {
-                from: 1000,
                 tween: {
                     targets: this.mask,
-                    y: this.human.y - 354,
+                    y: this.scale.height * 0.9 - 354,
                     ease: 'Cubic.easeOut',
                     duration: 1000
                 }
@@ -190,11 +293,11 @@ export class Intro extends Scene
                 from: 1000,
                 run: () => {
                     this.mask.setVisible(false);
-                    this.human.showFrame('dress', 3);
+                    this.human.showFrame('dress', 2);
                 }
             },
             {
-                from: 100,
+                from: 500,
                 tween: {
                     targets: this.titleText,
                     x: this.titlePosition.x + this.titleStartOffset.x,

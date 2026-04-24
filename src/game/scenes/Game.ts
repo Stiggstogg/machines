@@ -10,6 +10,7 @@ import {GameState} from '../helper/enums.ts';
 import gameOptions from '../helper/gameOptions.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
 import ProgressBar from '../sprites/ProgressBar.ts';
+import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
 
 export class Game extends Scene
 {
@@ -95,6 +96,9 @@ export class Game extends Scene
             meter: {x: this.scale.width * 0.92, y: this.scale.height * 0.6},
             startOffset: {x: this.scale.width, y: 0.2 * this.scale.height},         // offset to the final position and the position from / to where the tween is coming / going
         };
+
+        // add disco ball particle emitter
+        createDiscoBallParticles(this);
 
         // place basic objects
         this.floor = this.add.sprite(0, this.scale.height,'floor');     // add floor
@@ -317,12 +321,6 @@ export class Game extends Scene
         this.countdownText = this.add.text(this.positionsUI.countdown.x, this.positionsUI.countdown.y, '4', gameOptions.instructionTextStyle).setScale(0).setOrigin(0.5, 0);
         this.countdownText.setDepth(7);
 
-        // make all instruction texts visible again (they might got made invisible in the observe phase)
-        this.titleText.setAlpha(1);
-        this.instructionTextTop1.setAlpha(1);
-        this.instructionTextTop2.setAlpha(1);
-        this.hintText.setAlpha(1);
-
         // disable the timed event in case it did not fire yet
         this.observeInstructionsDisapear.remove(false);
 
@@ -469,6 +467,12 @@ export class Game extends Scene
         // change to the WIN state
         this.state = GameState.WIN;
 
+        // make all instruction texts visible again (they might got made invisible in the observe phase)
+        this.titleText.setAlpha(1);
+        this.instructionTextTop1.setAlpha(1);
+        this.instructionTextTop2.setAlpha(1);
+        this.hintText.setAlpha(1);
+
         // start the human and robot win dance animation
         this.human.danceWin();
         this.robot.danceWin();
@@ -481,6 +485,8 @@ export class Game extends Scene
         // Stop the light rotation and flicker the two lights
         this.lightLeft.rotateLightStop();
         this.lightRight.rotateLightStop();
+        this.lightLeft.putIntoSpotlightHigh();
+        this.lightRight.putIntoSpotlightHigh();
         this.lightLeft.flickerStart(0);
         this.lightRight.flickerStart(2);
 
@@ -550,6 +556,12 @@ export class Game extends Scene
         // change to the LISE state
         this.state = GameState.LOSE;
 
+        // make all instruction texts visible again (they might got made invisible in the observe phase)
+        this.titleText.setAlpha(1);
+        this.instructionTextTop1.setAlpha(1);
+        this.instructionTextTop2.setAlpha(1);
+        this.hintText.setAlpha(1);
+
         // add camera shake
         this.cameras.main.shake(200);
 
@@ -566,8 +578,8 @@ export class Game extends Scene
         // Stop the light rotation and put the human into the spotlight
         this.lightLeft.rotateLightStop();
         this.lightRight.rotateLightStop();
-        this.lightLeft.putIntoSpotlight();
-        this.lightRight.putIntoSpotlight();
+        this.lightLeft.putIntoSpotlightLow();
+        this.lightRight.putIntoSpotlightLow();
 
         // run the timeline to remove and add objects
         this.getDanceEndTimeline(
@@ -945,6 +957,8 @@ export class Game extends Scene
                 },
                 run: () => {
                     this.robot.danceLose();
+                    this.lightLeft.putIntoSpotlightHigh();
+                    this.lightRight.putIntoSpotlightHigh();
                 }
             }
         ];

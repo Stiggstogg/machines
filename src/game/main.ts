@@ -8,7 +8,6 @@ import { MainMenu } from './scenes/MainMenu';
 import {Credits} from './scenes/Credits.ts';
 import {Intro} from './scenes/Intro.ts';
 import {Game as MainGame} from './scenes/Game';
-import { GameOver } from './scenes/GameOver';
 
 // other imports
 import gameOptions from './helper/gameOptions';
@@ -40,8 +39,7 @@ const config: Phaser.Types.Core.GameConfig = {
         MainMenu,
         Credits,
         Intro,
-        MainGame,
-        GameOver
+        MainGame
     ]
 };
 

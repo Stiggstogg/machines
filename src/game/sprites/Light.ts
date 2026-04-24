@@ -131,7 +131,7 @@ export class Light extends GameObjects.Sprite {
     }
 
     // put something into the spotlight
-    putIntoSpotlight() {
+    putIntoSpotlightLow() {
 
         this.color(gameOptions.spotlightColor);
 
@@ -139,6 +139,21 @@ export class Light extends GameObjects.Sprite {
 
         if (!this.left) {
             spotlightAngle = 50;
+        }
+
+        this.setRotation(MathPhaser.DegToRad(this.rotationDirection * spotlightAngle));
+
+    }
+
+    // put something into the spotlight
+    putIntoSpotlightHigh() {
+
+        this.color(gameOptions.spotlightColor);
+
+        let spotlightAngle = 30;
+
+        if (!this.left) {
+            spotlightAngle = 40;
         }
 
         this.setRotation(MathPhaser.DegToRad(this.rotationDirection * spotlightAngle));

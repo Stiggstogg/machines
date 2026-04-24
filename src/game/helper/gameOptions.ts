@@ -91,7 +91,7 @@ const gameOptions: GameOptions = {
     smallTextStyle:
         {
             fontFamily: 'Asimovian',
-            fontSize: '20px',
+            fontSize: '24px',
             color: '#ffffff',
             stroke: '#000000',
             strokeThickness: 4

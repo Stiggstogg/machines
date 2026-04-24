@@ -46,18 +46,20 @@ export class Preloader extends Scene
         this.load.setPath('./assets/');
 
         // images
+        this.load.image('floor', 'images/floor.png');
         this.load.image('holder', 'images/holder.png');
         this.load.image('light', 'images/light.png');
         this.load.image('meter', 'images/meter.png');
         this.load.image('miniRobot', 'images/miniRobot.png');
         this.load.image('mask', 'images/mask.png');
+        this.load.image('particle', 'images/particle.png');
 
         // spritesheets
         this.load.spritesheet('roundButtons', 'images/roundButtons.png', {frameWidth: 110, margin: 3, spacing: 3});
         this.load.spritesheet('squareButton', 'images/squareButton.png', {frameWidth: 231, frameHeight: 64, margin: 3, spacing: 3});
 
         // spritesheets (aseprite format)
-        this.load.aseprite('floor', 'images/floor.png', 'images/floor.json');
+        //this.load.aseprite('floor', 'images/floor.png', 'images/floor.json');
         this.load.aseprite('human', 'images/human.png', 'images/human.json');
         this.load.aseprite('robot', 'images/robot.png', 'images/robot.json');
 

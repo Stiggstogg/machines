@@ -3,6 +3,7 @@ import gameOptions from "../helper/gameOptions";
 import {Position} from '../helper/types.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
 import {Light} from '../sprites/Light.ts';
+import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
 
 export class Credits extends Scene
 {
@@ -22,6 +23,9 @@ export class Credits extends Scene
 
     create()
     {
+
+        // add disco ball particle emitter
+        createDiscoBallParticles(this);
 
         // add floor
         const floor = this.add.sprite(0, this.scale.height * 0.8,'floor');

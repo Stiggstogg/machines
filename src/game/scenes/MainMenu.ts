@@ -1,9 +1,10 @@
-import {Scene, GameObjects, Time, Utils} from 'phaser';
+import {Scene, GameObjects, Time} from 'phaser';
 import gameOptions from "../helper/gameOptions";
 import {Position} from '../helper/types.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
 import {Human} from '../sprites/Human.ts';
 import {Light} from '../sprites/Light.ts';
+import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
 
 export class MainMenu extends Scene
 {
@@ -34,6 +35,9 @@ export class MainMenu extends Scene
         } else if (!menuMusic.isPlaying) {                          // just start it if it is not playing
             menuMusic.play({volume: 1});
         }
+
+        // add disco ball particle emitter
+        createDiscoBallParticles(this);
 
         // add floor
         const floor = this.add.sprite(0, this.scale.height,'floor');
