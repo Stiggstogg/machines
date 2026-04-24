@@ -7,6 +7,11 @@
   {
     "albumName": "album1",
     "trackName": "1",
+    "lightColors": ["1", "1"]
+  },
+  {
+    "albumName": "album1",
+    "trackName": "1",
     "lightColors": ["0", "0"]
   },
   {

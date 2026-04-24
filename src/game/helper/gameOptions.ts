@@ -67,7 +67,7 @@ const gameOptions: GameOptions = {
         {
             fontFamily: 'Monoton',
             fontSize: '60px',
-            color: '#ffffff',
+            color: '#fbf236',
             stroke: '#000000',
             strokeThickness: 4
         },
@@ -77,7 +77,8 @@ const gameOptions: GameOptions = {
             fontSize: '40px',
             color: '#ffffff',
             stroke: '#000000',
-            strokeThickness: 4
+            strokeThickness: 4,
+            align: 'center'
         },
     hintTextStyle:
         {
@@ -101,7 +102,7 @@ const gameOptions: GameOptions = {
             fontSize: '40px',
             color: '#000000',
             stroke: '#ffffff',
-            strokeThickness: 4,
+            strokeThickness: 4
         },
 };
 

@@ -48,6 +48,9 @@ export class Game extends Scene
     private noButton: GeneralButton;
     private meter: Meter;
 
+    // timed events
+    private observeInstructionsDisapear: Time.TimerEvent;
+
     
     constructor ()
     {
@@ -84,7 +87,7 @@ export class Game extends Scene
             instructionTop2: {x: middle, y: 0.16 * this.scale.height},
             hint: {x: middle, y: 0.22 * this.scale.height},
             countdown: {x: middle, y: 0.16 * this.scale.height},
-            instructionBottom: {x: middle, y: 0.85 * this.scale.height},
+            instructionBottom: {x: middle, y: 0.90 * this.scale.height},
             ok: {x: middle, y:buttonY},
             yes: {x: this.scale.width * 0.75, y: buttonY},
             no: {x: this.scale.width * 0.25, y: buttonY},
@@ -187,7 +190,7 @@ export class Game extends Scene
         this.instructionTextTop1 = this.add.text(this.positionsUI.instructionTop1.x + this.positionsUI.startOffset.x, this.positionsUI.instructionTop1.y, 'Watch the Robot Dance', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
         this.instructionTextTop2 = this.add.text(this.positionsUI.instructionTop2.x - this.positionsUI.startOffset.x, this.positionsUI.instructionTop2.y, 'Find the Dance Pattern', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
         this.hintText = this.add.text(this.positionsUI.hint.x, this.positionsUI.hint.y, this.hint, gameOptions.hintTextStyle).setOrigin(0.5, 0).setAlpha(0);
-        this.instructionTextBottom = this.add.text(this.positionsUI.instructionBottom.x, this.positionsUI.instructionBottom.y + this.positionsUI.startOffset.y, 'Are You Ready to Dance?', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
+        this.instructionTextBottom = this.add.text(this.positionsUI.instructionBottom.x, this.positionsUI.instructionBottom.y + this.positionsUI.startOffset.y, 'Hit DANCE when You \nKnow the Pattern', gameOptions.instructionTextStyle).setOrigin(0.5, 1);
 
         this.titleText.setDepth(7);
         this.instructionTextTop1.setDepth(7);
@@ -196,7 +199,7 @@ export class Game extends Scene
         this.instructionTextBottom.setDepth(7);
 
         // add button
-        this.okButton = this.add.existing(new GeneralButton(this, this.positionsUI.ok.x, this.positionsUI.ok.y + this.positionsUI.startOffset.y, 'Let\'s GO!', 'ok'));
+        this.okButton = this.add.existing(new GeneralButton(this, this.positionsUI.ok.x, this.positionsUI.ok.y + this.positionsUI.startOffset.y, 'DANCE', 'ok'));
 
         this.events.once('click-ok', () => {
 
@@ -214,6 +217,17 @@ export class Game extends Scene
         this.yesButton.setDepth(6);
         this.noButton.setDepth(6);
 
+        // add timed event to make song title and instructions disappear
+        this.observeInstructionsDisapear = this.time.addEvent({
+            delay: 10000,
+            callback: () => {
+                this.add.tween({
+                    targets: [this.titleText, this.instructionTextTop1, this.instructionTextTop2, this.hintText],
+                    alpha: 0,
+                    duration: 500
+                });
+            }
+        });
 
         // timeline for the tweens
         this.add.timeline([
@@ -302,6 +316,15 @@ export class Game extends Scene
         // add countdown
         this.countdownText = this.add.text(this.positionsUI.countdown.x, this.positionsUI.countdown.y, '4', gameOptions.instructionTextStyle).setScale(0).setOrigin(0.5, 0);
         this.countdownText.setDepth(7);
+
+        // make all instruction texts visible again (they might got made invisible in the observe phase)
+        this.titleText.setAlpha(1);
+        this.instructionTextTop1.setAlpha(1);
+        this.instructionTextTop2.setAlpha(1);
+        this.hintText.setAlpha(1);
+
+        // disable the timed event in case it did not fire yet
+        this.observeInstructionsDisapear.remove(false);
 
         // timeline for the tweens
         this.add.timeline([
