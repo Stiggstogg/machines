@@ -94,13 +94,15 @@ export class Credits extends Scene
         };
         this.buttonStartOffset = {
             x: 0,
-            y: this.scale.height
+            y: 0.2 * this.scale.height
         }
 
         this.backButton = this.add.existing(new GeneralButton(this, this.buttonPosition.x, this.buttonPosition.y + this.buttonStartOffset.y, 'Back', 'back'));
 
         // add event listeners for the button
         this.events.once('click-back', () => {
+
+            this.backButton.disableInteractive();
 
             this.getOutroTimeline().play();
 

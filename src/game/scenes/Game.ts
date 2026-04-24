@@ -126,11 +126,15 @@ export class Game extends Scene
         // add the lose and win condition event listeners
         this.events.once('meterFull', () => {
 
+            this.events.off('humanSongOver');     // turn off the event listener for the win condition
+
             this.startLose();
 
         });
 
         this.events.once('humanSongOver', () =>{
+
+            this.events.off('meterFull');     // turn off the event listener for the lose condition
 
             this.startWin();
 
@@ -193,9 +197,14 @@ export class Game extends Scene
 
         // add button
         this.okButton = this.add.existing(new GeneralButton(this, this.positionsUI.ok.x, this.positionsUI.ok.y + this.positionsUI.startOffset.y, 'Let\'s GO!', 'ok'));
+
         this.events.once('click-ok', () => {
+
+            this.okButton.disableInteractive();
+
             this.startDance();
         });
+
         this.okButton.setDepth(6);
 
         // create the yes / no buttons (not used in this scene but in later scenes)
@@ -282,7 +291,7 @@ export class Game extends Scene
         }
 
         // add event listeners for buttons
-        this.events.on('danceButtonClicked', (danceKey: string) => {
+        this.events.on('click-dance', (danceKey: string) => {
             this.human.dance(danceKey);
         })
 
@@ -465,10 +474,25 @@ export class Game extends Scene
 
             // add the event listener for the "Yes" button
             this.events.once('click-yes', () => {
+
+                // disable both buttons
+                this.yesButton.disableInteractive();
+                this.noButton.disableInteractive();
+
+                // disable the event listener for the no button
+                this.events.off('click-no');
+
                 this.startNextScene(false);
             });
 
             this.events.once('click-no', () => {
+
+                this.yesButton.disableInteractive();
+                this.noButton.disableInteractive();
+
+                // disable the event listener for the yes button
+                this.events.off('click-yes');
+
                 this.startNextScene(true);
             });
 
@@ -476,6 +500,7 @@ export class Game extends Scene
         else {
 
             this.okButton.changeText('OK');
+            this.okButton.setInteractive();
 
             // run the timeline to remove and add objects
             this.getDanceEndTimeline(
@@ -487,6 +512,10 @@ export class Game extends Scene
 
             // add the event listener for the "OK" button
             this.events.once('click-ok', () => {
+
+                // disable the ok button
+                this.okButton.disableInteractive();
+
                 this.startNextScene(true);
             });
         }
@@ -527,10 +556,26 @@ export class Game extends Scene
 
         // add the event listener for the "Yes" button
         this.events.once('click-yes', () => {
+
+            // disable both buttons
+            this.yesButton.disableInteractive();
+            this.noButton.disableInteractive();
+
+            // disable event listener for no button
+            this.events.off('click-no');
+
             this.startNextScene(false);
         });
 
         this.events.once('click-no', () => {
+
+            // disable both buttons
+            this.yesButton.disableInteractive();
+            this.noButton.disableInteractive();
+
+            // disable event listener for yes button
+            this.events.off('click-yes');
+
             this.startNextScene(true);
         });
 
@@ -538,6 +583,15 @@ export class Game extends Scene
 
     // move all objects out and fade out into next scene
     startNextScene(toMenu: boolean) {
+
+        // turn off all event listeners
+        this.events.off('newSongSection');
+        this.events.off('humanSongOver');
+        this.events.off('meterFull');
+        this.events.off('click-ok');
+        this.events.off('click-yes');
+        this.events.off('click-no');
+        this.events.off('click-dance');
 
         // fade out the scene
         this.cameras.main.fade(500);
@@ -630,13 +684,6 @@ export class Game extends Scene
                     y: this.positionsUI.ok.y + this.positionsUI.startOffset.y,
                     ease: 'Cubic.easeIn',
                     duration: 500
-                },
-                run: () => {
-
-                    // disable all buttons
-                    this.okButton.disableInteractive();
-                    this.yesButton.disableInteractive();
-                    this.noButton.disableInteractive();
                 }
             },
         ]).play();
@@ -710,6 +757,15 @@ export class Game extends Scene
                     y: this.positionsUI.danceButtons.y + this.positionsUI.startOffset.y,
                     ease: 'Cubic.easeOut',
                     duration: 500
+                },
+                run: () => {
+
+                    //disable all dance buttons
+                    for (let button of this.danceButtons) {
+
+                        button.disableInteractive();
+
+                    }
                 }
             }];
 
@@ -763,7 +819,7 @@ export class Game extends Scene
                         y: this.positionsUI.yes.y,
                         ease: 'Cubic.easeOut',
                         duration: 500
-                    }
+                    },
                 }
             ]);
 
@@ -777,6 +833,9 @@ export class Game extends Scene
                         y: this.positionsUI.yes.y,
                         ease: 'Cubic.easeOut',
                         duration: 500
+                    },
+                    run: () => {
+                        this.okButton.setInteractive();
                     }
                 },
                 {                                                                           // move human to the right
@@ -868,7 +927,6 @@ export class Game extends Scene
         ];
 
         return this.add.timeline(timelineConfig);
-
 
     }
 }

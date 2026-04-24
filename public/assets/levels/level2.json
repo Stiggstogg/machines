@@ -1,0 +1,20 @@
+{
+  "level": {
+    "robotSong": "song2-observe",
+    "humanSong": "song2-dance",
+    "bpm": "120",
+    "hint": "Hint: Listen to the Music!",
+    "ruleSet": [
+      {
+        "albumName": "album2",
+        "trackName": "3",
+        "lightColors": [
+          null,
+          null
+        ],
+        "lightsInSync": null,
+        "danceKey": "dance2"
+      }
+    ]
+  }
+}

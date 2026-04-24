@@ -21,7 +21,7 @@ export class DanceButton extends GameObjects.Sprite {
 
     private buttonClicked() {
 
-        this.scene.events.emit('danceButtonClicked', this.danceKey);
+        this.scene.events.emit('click-dance', this.danceKey);
 
     }
 

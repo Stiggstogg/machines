@@ -1,0 +1,63 @@
+{ "song": [
+  {
+    "albumName": "album3",
+    "trackName": "0",
+    "lightColors": ["2", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "1",
+    "lightColors": ["1", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "2",
+    "lightColors": ["3", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "3",
+    "lightColors": ["3", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "3",
+    "lightColors": ["2", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "2",
+    "lightColors": ["0", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "4",
+    "lightColors": ["0", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "4",
+    "lightColors": ["1", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "3",
+    "lightColors": ["2", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "3",
+    "lightColors": ["3", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "4",
+    "lightColors": ["2", "0"]
+  },
+  {
+    "albumName": "album3",
+    "trackName": "1",
+    "lightColors": ["0", "0"]
+  }
+]
+}

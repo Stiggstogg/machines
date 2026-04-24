@@ -26,6 +26,15 @@ export class MainMenu extends Scene
     create()
     {
 
+        // play menu music if it is not already playing
+        const menuMusic = this.sound.get('menu') as Phaser.Sound.BaseSound | null;
+
+        if (!menuMusic) {                                           // create it if it does not exist and start it
+            this.sound.add('menu', { loop: true }).play();
+        } else if (!menuMusic.isPlaying) {                          // just start it if it is not playing
+            menuMusic.play({volume: 1});
+        }
+
         // add floor
         const floor = this.add.sprite(0, this.scale.height,'floor');
         floor.setOrigin(0, 1);
@@ -106,20 +115,24 @@ export class MainMenu extends Scene
         // add event listeners for the buttons
         this.events.once('click-play', () => {
 
+            this.disableAllButtons();
+
             this.getOutroTimeline().play();
 
             this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.start('Intro');
+                this.nextScene('Intro');
             });
 
         })
 
         this.events.once('click-credits', () => {
 
+            this.disableAllButtons();
+
             this.getOutroTimeline().play();
 
             this.cameras.main.once('camerafadeoutcomplete', () => {
-               this.scene.start('Credits');
+                this.nextScene('Credits');
             });
 
         })
@@ -223,6 +236,26 @@ export class MainMenu extends Scene
         ];
 
         return this.add.timeline(timelineConfig);
+
+    }
+
+    // disable all buttons (usually when one of the buttons ins pressed)
+    disableAllButtons() {
+
+        this.playButton.disableInteractive();
+        this.creditsButton.disableInteractive();
+
+    }
+
+    // go to the next scene
+    nextScene(sceneKey: string) {
+
+        // turn off all events
+        this.events.off('click-play');
+        this.events.off('click-credits');
+
+        // go to the next scene
+        this.scene.start(sceneKey);
 
     }
 

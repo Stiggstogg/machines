@@ -1,0 +1,28 @@
+{ "song": [
+  {
+    "albumName": "album2",
+    "trackName": "0",
+    "lightColors": ["2", "3"]
+  },
+  {
+    "albumName": "album2",
+    "trackName": "1",
+    "lightColors": ["2", "3"]
+  },
+  {
+    "albumName": "album2",
+    "trackName": "2",
+    "lightColors": ["2", "3"]
+  },
+  {
+    "albumName": "album2",
+    "trackName": "3",
+    "lightColors": ["2", "3"]
+  },
+  {
+    "albumName": "album2",
+    "trackName": "1",
+    "lightColors": ["2", "3"]
+  }
+]
+}

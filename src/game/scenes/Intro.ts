@@ -73,7 +73,7 @@ export class Intro extends Scene
         };
         this.buttonStartOffset = {
             x: 0,
-            y: this.scale.height
+            y: this.scale.height * 0.2
         }
 
         this.goButton = this.add.existing(new GeneralButton(this, this.buttonPosition.x, this.buttonPosition.y + this.buttonStartOffset.y, 'Let\'s GO!', 'go'));
@@ -81,10 +81,16 @@ export class Intro extends Scene
         // add event listeners for the button
         this.events.once('click-go', () => {
 
+            this.goButton.disableInteractive();     // disable the button
+
             this.getOutroTimeline().play();
 
             this.cameras.main.once('camerafadeoutcomplete', () => {
-               this.scene.start('Game', {level: 1});
+
+                // stop all audio
+                this.sound.stopAll();
+
+                this.scene.start('Game', {level: 1});
             });
 
         })
@@ -202,6 +208,14 @@ export class Intro extends Scene
                     this.cameras.main.fadeOut(500);
                 }
             },
+            {                                                           // fade out music
+                from: 0,
+                tween: {
+                    targets: this.sound.get('menu'),
+                    volume: 0,
+                    duration: 500
+                }
+            }
         ];
 
         return this.add.timeline(timelineConfig);

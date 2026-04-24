@@ -1,40 +1,19 @@
 {
   "level": {
-    "robotSong": "song1",
-    "humanSong": "song2",
+    "robotSong": "song1-observe",
+    "humanSong": "song1-dance",
     "bpm": "120",
-    "time": "23:00",
     "hint": "Hint: Watch the spotlights!",
     "ruleSet": [
       {
         "albumName": "album1",
-        "trackName": "0",
+        "trackName": null,
         "lightColors": [
-          null,
-          null
-        ],
-        "lightsInSync": null,
-        "danceKey": "idle"
-      },
-      {
-        "albumName": "album1",
-        "trackName": "1",
-        "lightColors": [
-          null,
-          null
+          "1",
+          "1"
         ],
         "lightsInSync": null,
         "danceKey": "dance1"
-      },
-      {
-        "albumName": "album1",
-        "trackName": "2",
-        "lightColors": [
-          null,
-          null
-        ],
-        "lightsInSync": null,
-        "danceKey": "dance2"
       }
     ]
   }
