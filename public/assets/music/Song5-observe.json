@@ -27,7 +27,7 @@
   {
     "albumName": "album5",
     "trackName": "1",
-    "lightColors": ["1", "0"]
+    "lightColors": ["2", "3"]
   },
   {
     "albumName": "album5",
@@ -42,7 +42,7 @@
   {
     "albumName": "album5",
     "trackName": "2",
-    "lightColors": ["2", "3"]
+    "lightColors": ["1", "0"]
   }
 ]
 }

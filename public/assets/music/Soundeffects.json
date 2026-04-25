@@ -1,0 +1,37 @@
+{
+  "resources": [
+    "./assets/music/Soundeffects.mp3"
+  ],
+  "spritemap": {
+    "click": {
+      "start": 0,
+      "end": 0.125,
+      "loop": false
+    },
+    "suitOn": {
+      "start": 0.5,
+      "end": 1.5,
+      "loop": false
+    },
+    "loseSound": {
+      "start": 2.0,
+      "end": 2.5,
+      "loop": false
+    },
+    "loseUnmask": {
+      "start": 3.0,
+      "end": 3.5,
+      "loop": false
+    },
+    "loseKick": {
+      "start": 3.5,
+      "end": 4.0,
+      "loop": false
+    },
+    "winSound": {
+      "start": 4.0,
+      "end": 4.5,
+      "loop": false
+    }
+  }
+}

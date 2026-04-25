@@ -7,17 +7,17 @@
   {
     "albumName": "album4",
     "trackName": "1",
-    "lightColors": ["3", "3"]
+    "lightColors": ["2", "2"]
   },
   {
     "albumName": "album4",
     "trackName": "2",
-    "lightColors": ["3", "3"]
+    "lightColors": ["2", "2"]
   },
   {
     "albumName": "album4",
     "trackName": "3",
-    "lightColors": ["3", "3"]
+    "lightColors": ["2", "2"]
   },
   {
     "albumName": "album4",
@@ -27,27 +27,27 @@
   {
     "albumName": "album4",
     "trackName": "2",
-    "lightColors": ["1", "1"]
+    "lightColors": ["0", "0"]
   },
   {
     "albumName": "album4",
     "trackName": "3",
-    "lightColors": ["2", "2"]
+    "lightColors": ["0", "0"]
   },
   {
     "albumName": "album4",
     "trackName": "4",
-    "lightColors": ["3", "3"]
+    "lightColors": ["2", "2"]
   },
   {
     "albumName": "album4",
     "trackName": "5",
-    "lightColors": ["3", "3"]
+    "lightColors": ["2", "2"]
   },
   {
     "albumName": "album4",
     "trackName": "6",
-    "lightColors": ["3", "3"]
+    "lightColors": ["2", "2"]
   },
   {
     "albumName": "album4",
@@ -57,12 +57,12 @@
   {
     "albumName": "album4",
     "trackName": "5",
-    "lightColors": ["1", "1"]
+    "lightColors": ["0", "0"]
   },
   {
     "albumName": "album4",
     "trackName": "6",
-    "lightColors": ["2", "2"]
+    "lightColors": ["0", "0"]
   }
 ]
 }

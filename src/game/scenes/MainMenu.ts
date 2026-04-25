@@ -5,6 +5,8 @@ import {GeneralButton} from '../sprites/GeneralButton.ts';
 import {Human} from '../sprites/Human.ts';
 import {Light} from '../sprites/Light.ts';
 import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
+import {getAudio} from '../helper/GetAudio.ts';
+import {confettiParticles} from '../helper/Confetti.ts';
 
 export class MainMenu extends Scene
 {
@@ -27,13 +29,11 @@ export class MainMenu extends Scene
     create()
     {
 
-        // play menu music if it is not already playing
-        const menuMusic = this.sound.get('menu') as Phaser.Sound.BaseSound | null;
+        // get and play the menu music (if it is not already playing)
+        const menuMusic = getAudio(this, 'menu');
 
-        if (!menuMusic) {                                           // create it if it does not exist and start it
-            this.sound.add('menu', { loop: true }).play();
-        } else if (!menuMusic.isPlaying) {                          // just start it if it is not playing
-            menuMusic.play({volume: 1});
+        if (!menuMusic.isPlaying) {
+            menuMusic.play({volume: 1, loop: true});        // set its volume to 1, as it might have been muted before
         }
 
         // add disco ball particle emitter
@@ -127,7 +127,7 @@ export class MainMenu extends Scene
                 this.nextScene('Intro');
             });
 
-        })
+        });
 
         this.events.once('click-credits', () => {
 
@@ -139,7 +139,7 @@ export class MainMenu extends Scene
                 this.nextScene('Credits');
             });
 
-        })
+        });
 
         // get timeline for intro and play it
         this.getIntroTimeline().play();

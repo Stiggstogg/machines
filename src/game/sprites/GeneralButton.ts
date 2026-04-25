@@ -1,5 +1,6 @@
-import { GameObjects, Scene } from 'phaser';
+import { GameObjects, Scene, Sound } from 'phaser';
 import gameOptions from '../helper/gameOptions.ts';
+import {getAudio, getAudioSprite} from '../helper/GetAudio.ts';
 
 // General button class
 export class GeneralButton extends GameObjects.Container {
@@ -7,6 +8,7 @@ export class GeneralButton extends GameObjects.Container {
     private readonly image: GameObjects.Image;
     private readonly text: GameObjects.Text;
     private readonly id: string;
+    private readonly soundEffects: Sound.BaseSound;
 
     // Constructor
     constructor(scene: Scene, x: number, y: number, text: string, id: string, color?: 'red' | 'green') {
@@ -38,8 +40,10 @@ export class GeneralButton extends GameObjects.Container {
 
     // Action that should happen when the button is clicked
     click(): void {
+
+        getAudioSprite(this.scene, 'soundeffects').play("click");
+
         this.scene.events.emit('click-' + this.id);
-        // this.scene.sound.play('click');          // TODO: add click sound
     }
 
     // Change the button text

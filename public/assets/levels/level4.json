@@ -9,8 +9,8 @@
         "albumName": "album4",
         "trackName": "4",
         "lightColors": [
-          "3",
-          "3"
+          "2",
+          "2"
         ],
         "lightsInSync": null,
         "danceKey": "dance2"
@@ -19,8 +19,8 @@
         "albumName": "album4",
         "trackName": "5",
         "lightColors": [
-          "3",
-          "3"
+          "2",
+          "2"
         ],
         "lightsInSync": null,
         "danceKey": "dance2"
@@ -29,38 +29,18 @@
         "albumName": "album4",
         "trackName": "6",
         "lightColors": [
-          "3",
-          "3"
+          "2",
+          "2"
         ],
         "lightsInSync": null,
         "danceKey": "dance2"
       },
       {
         "albumName": "album4",
-        "trackName": "1",
+        "trackName": null,
         "lightColors": [
-          "3",
-          "3"
-        ],
-        "lightsInSync": null,
-        "danceKey": "dance1"
-      },
-      {
-        "albumName": "album4",
-        "trackName": "2",
-        "lightColors": [
-          "3",
-          "3"
-        ],
-        "lightsInSync": null,
-        "danceKey": "dance1"
-      },
-      {
-        "albumName": "album4",
-        "trackName": "3",
-        "lightColors": [
-          "3",
-          "3"
+          "2",
+          "2"
         ],
         "lightsInSync": null,
         "danceKey": "dance1"

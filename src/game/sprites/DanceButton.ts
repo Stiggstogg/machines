@@ -1,5 +1,6 @@
 import { GameObjects, Scene } from 'phaser';
 import gameOptions from '../helper/gameOptions.ts';
+import {getAudioSprite} from '../helper/GetAudio.ts';
 
 // Button class
 export class DanceButton extends GameObjects.Sprite {
@@ -20,6 +21,8 @@ export class DanceButton extends GameObjects.Sprite {
     }
 
     private buttonClicked() {
+
+        getAudioSprite(this.scene, 'soundeffects').play("click");
 
         this.scene.events.emit('click-dance', this.danceKey);
 

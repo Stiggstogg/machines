@@ -25,7 +25,7 @@ export default class Meter extends GameObjects.Container {
         meterBackground.setOrigin(0.5, 1);
 
         // create the indicator
-        this.indicator = new GameObjects.Rectangle(scene, 0, readingOffsetY, readingWidth, this.readingHeight, 0xdf7126);
+        this.indicator = new GameObjects.Rectangle(scene, 0, readingOffsetY, readingWidth, this.readingHeight, 0xff0000); // 0xdf7126);
         this.indicator.setOrigin(0.5, 0);
         this.indicator.setRotation(Math.PI);        // needs to be rotated otherwise it fills up from the top down
 

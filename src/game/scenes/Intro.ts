@@ -4,6 +4,7 @@ import {Position} from '../helper/types.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
 import {Human} from '../sprites/Human.ts';
 import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
+import {getAudio, getAudioSprite} from '../helper/GetAudio.ts';
 
 export class Intro extends Scene
 {
@@ -269,13 +270,14 @@ export class Intro extends Scene
               }
             },
             {
-                from: 1500,
+                from: 1800,
                 run: () => {
                     this.particleEmitter.explode(50);
+                    getAudioSprite(this, 'soundeffects').play('suitOn');
                 }
             },
             {
-                from: 500,
+                from: 200,
                 run: () => {
                     this.human.showFrame('dress', 1);
                 }
@@ -290,10 +292,22 @@ export class Intro extends Scene
                 }
             },
             {
-                from: 1000,
+                from: 800,
                 run: () => {
+
+                    // emit particle and play sound
+                    this.particleEmitter.setY(this.scale.height * 0.50);
+                    this.particleEmitter.explode(50);
+                    getAudioSprite(this, 'soundeffects').play('suitOn');
+                }
+            },
+            {
+                from: 200,
+                run: () => {
+
                     this.mask.setVisible(false);
                     this.human.showFrame('dress', 2);
+
                 }
             },
             {
@@ -306,7 +320,7 @@ export class Intro extends Scene
                 }
             },
             {
-                from: 500,
+                from: 1000,
                 run: () => {
                     this.cameras.main.fadeOut(500);
                 }

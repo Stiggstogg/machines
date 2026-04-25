@@ -11,6 +11,8 @@ import gameOptions from '../helper/gameOptions.ts';
 import {GeneralButton} from '../sprites/GeneralButton.ts';
 import ProgressBar from '../sprites/ProgressBar.ts';
 import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
+import {getAudio, getAudioSprite} from '../helper/GetAudio.ts';
+import {confettiParticles} from '../helper/Confetti.ts';
 
 export class Game extends Scene
 {
@@ -32,6 +34,8 @@ export class Game extends Scene
     private lightLeft: Light;
     private lightRight: Light;
     private musicLightPlayer: MusicLightPlayer;
+    private confettiEmitterLeft: GameObjects.Particles.ParticleEmitter;
+    private confettiEmitterRight: GameObjects.Particles.ParticleEmitter;
 
     // text
     private titleText: GameObjects.Text;
@@ -99,6 +103,12 @@ export class Game extends Scene
 
         // add disco ball particle emitter
         createDiscoBallParticles(this);
+
+        // create the confetti particle emitters
+        this.confettiEmitterLeft = confettiParticles(this, 'left');
+        this.confettiEmitterRight = confettiParticles(this, 'right');
+        this.confettiEmitterLeft.setDepth(3.5);
+        this.confettiEmitterRight.setDepth(3.5);
 
         // place basic objects
         this.floor = this.add.sprite(0, this.scale.height,'floor');     // add floor
@@ -472,14 +482,19 @@ export class Game extends Scene
         // change to the WIN state
         this.state = GameState.WIN;
 
+        // play win sound
+        getAudioSprite(this, 'soundeffects').play('winSound');
+
+        // emit confetti
+        this.confettiEmitterLeft.explode(100);
+        this.confettiEmitterRight.explode(100);
+
         // start the human and robot win dance animation
         this.human.danceWin();
         this.robot.danceWin();
 
         // play the win music
-        const winAudio = this.sound.add('win', {
-            loop: true
-        }).play();
+        getAudio(this, 'win').play({loop: true, volume: 1});
 
         // Stop the light rotation and flicker the two lights
         this.lightLeft.rotateLightStop();
@@ -561,15 +576,16 @@ export class Game extends Scene
         // add camera shake
         this.cameras.main.shake(200);
 
+        // play lose sound
+        getAudioSprite(this, 'soundeffects').play('loseSound');
+
         // start the human and robot lose animation
         this.getKickoutTimeline().play();
 
         // stop the musicLightPlayer and play the lose music
         this.musicLightPlayer.stopSong();
 
-        this.sound.add('lose', {
-            loop: true
-        }).play();
+        getAudio(this, 'lose').play({loop: true, volume: 1});
 
         // Stop the light rotation and put the human into the spotlight
         this.lightLeft.rotateLightStop();
@@ -919,6 +935,7 @@ export class Game extends Scene
                 run: () => {
                     this.human.showFrame('lose', 1);
                     this.robot.showFrame('lose', 1);
+                    getAudioSprite(this, 'soundeffects').play('loseUnmask');
                 }
             },
             {
@@ -932,6 +949,7 @@ export class Game extends Scene
                 run: () => {
                     this.human.changeOriginY(0.5);
                     this.robot.showFrame('lose', 2);
+                    getAudioSprite(this, 'soundeffects').play('loseKick');
                 }
             },
             {

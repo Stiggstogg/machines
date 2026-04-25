@@ -47,8 +47,8 @@ const gameOptions: GameOptions = {
     ],
     meterParameters: {
         maximum: 100,           // maximum value when
-        wrongFactor: 0.6,       // how much the meter value increases per frame if the human dances wrongly
-        correctFactor: -0.2,    // how much the meter value increases (negative -> decrease) per frame if the human dances correctly
+        wrongFactor: 0.3,       // how much the meter value increases per frame if the human dances wrongly
+        correctFactor: -0.02,    // how much the meter value increases (negative -> decrease) per frame if the human dances correctly
     },
     barsPerTrack: 2,            // how many bars does each track on an album have
     menuDanceBPM: 160,           // bpm of the menu music
