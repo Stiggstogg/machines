@@ -72,6 +72,7 @@ export class Preloader extends Scene
         this.load.audioSprite('album1', 'music/Album1.json', 'music/Album1.mp3');
         this.load.audioSprite('album2', 'music/Album2.json', 'music/Album2.mp3');
         this.load.audioSprite('album3', 'music/Album3.json', 'music/Album3.mp3');
+        this.load.audioSprite('album4', 'music/Album4.json', 'music/Album4.mp3');
 
         // audio: Songs
         this.load.json('song1-observe', 'music/Song1-observe.json');
@@ -80,11 +81,14 @@ export class Preloader extends Scene
         this.load.json('song2-dance', 'music/Song2-dance.json');
         this.load.json('song3-observe', 'music/Song3-observe.json');
         this.load.json('song3-dance', 'music/Song3-dance.json');
+        this.load.json('song4-observe', 'music/Song4-observe.json');
+        this.load.json('song4-dance', 'music/Song4-dance.json');
 
         // levels
         this.load.json('level1', 'levels/level1.json');
         this.load.json('level2', 'levels/level2.json');
         this.load.json('level3', 'levels/level3.json');
+        this.load.json('level4', 'levels/level4.json');
 
         // fonts
         this.load.font('Asimovian', 'fonts/Asimovian-Regular.ttf' , 'truetype');
@@ -102,9 +106,9 @@ export class Preloader extends Scene
         this.anims.createFromAseprite('robot');
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+        //this.scene.start('MainMenu');
         //this.scene.start('Intro');
-        //this.scene.start('Game', {level: 1});       // TODO: Remove and change here again to the main menu, this is only for faster developement
+        this.scene.start('Game', {level: 4});       // TODO: Remove and change here again to the main menu, this is only for faster developement
 
     }
 }

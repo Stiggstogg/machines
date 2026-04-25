@@ -1,0 +1,42 @@
+{
+  "resources": [
+    "./assets/music/Album4.mp3"
+  ],
+  "spritemap": {
+    "0": {
+      "start": 0,
+      "end": 4,
+      "loop": false
+    },
+    "1": {
+      "start": 4,
+      "end": 8,
+      "loop": false
+    },
+    "2": {
+      "start": 8,
+      "end": 12,
+      "loop": false
+    },
+    "3": {
+      "start": 12,
+      "end": 16,
+      "loop": false
+    },
+    "4": {
+      "start": 16,
+      "end": 20,
+      "loop": false
+    },
+    "5": {
+      "start": 20,
+      "end": 24,
+      "loop": false
+    },
+    "6": {
+      "start": 24,
+      "end": 28,
+      "loop": false
+    }
+  }
+}
