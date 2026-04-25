@@ -94,7 +94,7 @@ export class Intro extends Scene
             y: 0
         }
 
-        this.titleText = this.add.text(this.titlePosition.x + this.titleStartOffset.x, this.titlePosition.y, "INTRO", gameOptions.gameTitleTextStyle).setOrigin(0.5);
+        this.titleText = this.add.text(this.titlePosition.x + this.titleStartOffset.x, this.titlePosition.y, "INTRO", gameOptions.titleTextStyle).setOrigin(0.5);
 
         // create buttons
         this.buttonPosition = {

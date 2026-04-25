@@ -53,7 +53,7 @@ const gameOptions: GameOptions = {
     barsPerTrack: 2,            // how many bars does each track on an album have
     menuDanceBPM: 160,           // bpm of the menu music
     winDanceBPM: 160,           // bpm of the win dance
-    loseDanceBPM: 160,          // bpm of the lose dance
+    loseDanceBPM: 80,          // bpm of the lose dance
 
     gameTitleTextStyle:
         {

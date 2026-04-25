@@ -10,8 +10,8 @@ export class Credits extends Scene
     private titleText: GameObjects.Text;
     private titlePosition: Position;
     private titleStartOffset: Position;
-    private creditsTitles: GameObjects.Text;
-    private creditsTexts: GameObjects.Text;
+    private creditsTitles: GameObjects.Text[];
+    private creditsDescriptions: GameObjects.Text[];
     private backButton: GeneralButton;
     private buttonPosition: Position;
     private buttonStartOffset: Position;
@@ -32,35 +32,51 @@ export class Credits extends Scene
         floor.setOrigin(0, 0);
 
         // add credits text
-        const creditsTextY = this.scale.height * 0.30;
+        const creditsTextGapY = this.scale.height * 0.02;
 
-        this.creditsTitles = this.add.text(this.scale.width * 0.05, creditsTextY, '', gameOptions.smallTextStyle).setOrigin(0, 0);
-        this.creditsTexts = this.add.text(this.scale.width * 0.35, creditsTextY, '', gameOptions.smallTextStyle).setOrigin(0, 0);
+        const creditsTitlesTexts = [
+            'Special thanks to my support and inspiration at home!\n' +
+            'Thanks to my play testers.',
+            'Code:',
+            'Graphics:',
+            'Music:',
+            'Sound effects:',
+            'Framework:',
+            'Tools:'
+        ];
 
-        this.creditsTitles.setText(
-            'Special thanks to my support and inspiration\nat home!\n' +
-            'Thanks to my play testers.\n\n' +
-            'Code:\n\n\n' +
-            'Graphics:\n\n' +
-            'Music:\n\n\n' +
-            'Sound effects:\n\n' +
-            'Framework:\n\n' +
-            'Tools:\n\n\n'
-        );
+        const creditsDescriptionsTexts = [
+            '',
+            'Home made typescript spaghetti code',
+            'Hand drawn by me',
+            'Original compositions played on my synthesizers',
+            'Played on my synthesizers',
+            'Phaser 4',
+            'vite.js, Webstorm, Aseprite and Reaper'
+        ]
 
-        this.creditsTexts.setText(
-            '\n\n' +
-            '\n\n' +
-            'Home made typescript spaghetti\ncode\n\n' +
-            'Hand drawn by me\n\n' +
-            'Original compositions played on\nmy instruments\n\n' +
-            'Played on my instruments\n\n' +
-            'Phaser 4\n\n' +
-            'vite.js, Webstorm, Aseprite\nand Reaper\n'
-        );
+        this.creditsTitles = [];
+        this.creditsDescriptions = [];
 
-        this.creditsTitles.setAlpha(0);
-        this.creditsTexts.setAlpha(0);
+        let positionY = this.scale.height * 0.22;
+
+        for (let i = 0; i < creditsTitlesTexts.length; i++) {
+
+            if (i > 0) {
+                let lastTitle = this.creditsTitles[i-1];
+                let lastDescription = this.creditsDescriptions[i-1];
+                positionY = lastTitle.y + Math.max(lastTitle.displayHeight, lastDescription.displayHeight) + creditsTextGapY;
+            }
+
+            let titleText = this.add.text(this.scale.width * 0.02, 0, creditsTitlesTexts[i], gameOptions.smallTextStyle).setOrigin(0, 0);
+            let descriptionText = this.add.text(this.scale.width * 0.37, 0, creditsDescriptionsTexts[i], gameOptions.smallTextStyle).setOrigin(0, 0);
+            titleText.setWordWrapWidth(this.scale.width * 0.96).setAlpha(0).setY(positionY);
+            descriptionText.setWordWrapWidth(this.scale.width * 0.53).setAlpha(0).setY(positionY);
+
+            this.creditsTitles.push(titleText);
+            this.creditsDescriptions.push(descriptionText);
+
+        }
 
         // add holder and lights
         const holderXPosition = 0.1;    // holder position from nearest edge
@@ -89,7 +105,7 @@ export class Credits extends Scene
             y: 0
         }
 
-        this.titleText = this.add.text(this.titlePosition.x + this.titleStartOffset.x, this.titlePosition.y, "CREDITS", gameOptions.gameTitleTextStyle).setOrigin(0.5);
+        this.titleText = this.add.text(this.titlePosition.x + this.titleStartOffset.x, this.titlePosition.y, "CREDITS", gameOptions.titleTextStyle).setOrigin(0.5);
 
         // create buttons
         this.buttonPosition = {
@@ -153,7 +169,7 @@ export class Credits extends Scene
             {
                 from: 0,
                 tween: {
-                    targets: [this.creditsTexts, this.creditsTitles],
+                    targets: [...this.creditsTitles, ...this.creditsDescriptions],
                     alpha: 1,
                     duration: 500
                 }
@@ -181,7 +197,7 @@ export class Credits extends Scene
             {
                 from: 0,
                 tween: {
-                    targets: [this.creditsTexts, this.creditsTitles],
+                    targets: [...this.creditsTitles, ...this.creditsDescriptions],
                     alpha: 0,
                     duration: 500
                 }
@@ -196,7 +212,7 @@ export class Credits extends Scene
                 }
             },
             {
-                at: 0,
+                at: 400,
                 run: () => {
                     this.cameras.main.fadeOut(500);
                 }

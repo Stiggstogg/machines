@@ -66,6 +66,7 @@ export class Preloader extends Scene
         // audio
         this.load.audio('menu', 'music/Menu.mp3');
         this.load.audio('win', 'music/Win.mp3');
+        this.load.audio('lose', 'music/Lose.mp3');
 
         // audio: Albums
         this.load.audioSprite('album1', 'music/Album1.json', 'music/Album1.mp3');

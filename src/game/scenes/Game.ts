@@ -406,6 +406,11 @@ export class Game extends Scene
                     // set the new song (it will start to play as soon as the current section is finished
                     this.musicLightPlayer.loadSong(this.humanSong, true);
 
+                    // make all instruction texts visible again (they might got made invisible in the observe phase)
+                    this.titleText.setAlpha(1);
+                    this.instructionTextTop1.setAlpha(1);
+                    this.instructionTextTop2.setAlpha(1);
+
                     // set the "Are you ready?" text
                     this.instructionTextTop1.setText('Are You Ready?');
 
@@ -467,12 +472,6 @@ export class Game extends Scene
         // change to the WIN state
         this.state = GameState.WIN;
 
-        // make all instruction texts visible again (they might got made invisible in the observe phase)
-        this.titleText.setAlpha(1);
-        this.instructionTextTop1.setAlpha(1);
-        this.instructionTextTop2.setAlpha(1);
-        this.hintText.setAlpha(1);
-
         // start the human and robot win dance animation
         this.human.danceWin();
         this.robot.danceWin();
@@ -531,6 +530,9 @@ export class Game extends Scene
             this.okButton.changeText('OK');
             this.okButton.setInteractive();
 
+            // change title text to "CONGRATULATIONS"
+            this.titleText.setText("Congrats!");
+
             // run the timeline to remove and add objects
             this.getDanceEndTimeline(
                 'You Made It!',
@@ -556,12 +558,6 @@ export class Game extends Scene
         // change to the LISE state
         this.state = GameState.LOSE;
 
-        // make all instruction texts visible again (they might got made invisible in the observe phase)
-        this.titleText.setAlpha(1);
-        this.instructionTextTop1.setAlpha(1);
-        this.instructionTextTop2.setAlpha(1);
-        this.hintText.setAlpha(1);
-
         // add camera shake
         this.cameras.main.shake(200);
 
@@ -571,7 +567,7 @@ export class Game extends Scene
         // stop the musicLightPlayer and play the lose music
         this.musicLightPlayer.stopSong();
 
-        this.sound.add('win', {         // TODO: Replace this with the 'lose' sound as soon as it is available
+        this.sound.add('lose', {
             loop: true
         }).play();
 
@@ -949,7 +945,20 @@ export class Game extends Scene
                 }
             },
             {
-                from: 1000,
+                from: 700,
+                tween: {
+                    targets: this.robot,
+                    x: this.scale.width * 0.5,
+                    duration: 300
+                },
+                run: () => {
+                    this.robot.showFrame('idle', 0);
+                    this.lightLeft.putIntoSpotlightHigh();
+                    this.lightRight.putIntoSpotlightHigh();
+                }
+            },
+            {
+                from: 300,
                 tween: {
                     targets: this.robot,
                     x: this.scale.width * 0.5,
@@ -957,8 +966,6 @@ export class Game extends Scene
                 },
                 run: () => {
                     this.robot.danceLose();
-                    this.lightLeft.putIntoSpotlightHigh();
-                    this.lightRight.putIntoSpotlightHigh();
                 }
             }
         ];
