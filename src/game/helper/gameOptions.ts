@@ -28,7 +28,7 @@ type GameOptions = {
 
 const gameOptions: GameOptions = {
     gameTitle: 'MACHINE DISCO',
-    maxLevel: 4,
+    maxLevel: 5,
     gameTitleColors: [
         '#fbf236',
         '#99e550'
