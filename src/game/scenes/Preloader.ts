@@ -59,7 +59,6 @@ export class Preloader extends Scene
         this.load.spritesheet('squareButton', 'images/squareButton.png', {frameWidth: 231, frameHeight: 64, margin: 3, spacing: 3});
 
         // spritesheets (aseprite format)
-        //this.load.aseprite('floor', 'images/floor.png', 'images/floor.json');
         this.load.aseprite('human', 'images/human.png', 'images/human.json');
         this.load.aseprite('robot', 'images/robot.png', 'images/robot.json');
 
@@ -73,6 +72,7 @@ export class Preloader extends Scene
         this.load.audioSprite('album2', 'music/Album2.json', 'music/Album2.mp3');
         this.load.audioSprite('album3', 'music/Album3.json', 'music/Album3.mp3');
         this.load.audioSprite('album4', 'music/Album4.json', 'music/Album4.mp3');
+        this.load.audioSprite('album5', 'music/Album5.json', 'music/Album5.mp3');
 
         // audio: Songs
         this.load.json('song1-observe', 'music/Song1-observe.json');
@@ -83,12 +83,15 @@ export class Preloader extends Scene
         this.load.json('song3-dance', 'music/Song3-dance.json');
         this.load.json('song4-observe', 'music/Song4-observe.json');
         this.load.json('song4-dance', 'music/Song4-dance.json');
+        this.load.json('song5-observe', 'music/Song5-observe.json');
+        this.load.json('song5-dance', 'music/Song5-dance.json');
 
         // levels
         this.load.json('level1', 'levels/level1.json');
         this.load.json('level2', 'levels/level2.json');
         this.load.json('level3', 'levels/level3.json');
         this.load.json('level4', 'levels/level4.json');
+        this.load.json('level5', 'levels/level5.json');
 
         // fonts
         this.load.font('Asimovian', 'fonts/Asimovian-Regular.ttf' , 'truetype');
@@ -108,7 +111,7 @@ export class Preloader extends Scene
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start('MainMenu');
         //this.scene.start('Intro');
-        //this.scene.start('Game', {level: 4});       // TODO: Remove and change here again to the main menu, this is only for faster developement
+        //this.scene.start('Game', {level: 5});       // TODO: Remove and change here again to the main menu, this is only for faster developement
 
     }
 }

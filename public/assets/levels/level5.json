@@ -1,0 +1,30 @@
+{
+  "level": {
+    "robotSong": "song5-observe",
+    "humanSong": "song5-dance",
+    "bpm": "120",
+    "hint": "Hint: Tricky Lights!",
+    "ruleSet": [
+      {
+        "albumName": "album5",
+        "trackName": null,
+        "lightColors": [
+          "1",
+          "1"
+        ],
+        "lightsInSync": null,
+        "danceKey": "dance1"
+      },
+      {
+        "albumName": "album5",
+        "trackName": null,
+        "lightColors": [
+          "2",
+          "2"
+        ],
+        "lightsInSync": null,
+        "danceKey": "dance2"
+      }
+    ]
+  }
+}

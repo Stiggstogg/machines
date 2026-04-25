@@ -1,0 +1,22 @@
+{
+  "resources": [
+    "./assets/music/Album5.mp3"
+  ],
+  "spritemap": {
+    "0": {
+      "start": 0,
+      "end": 4,
+      "loop": false
+    },
+    "1": {
+      "start": 4,
+      "end": 8,
+      "loop": false
+    },
+    "2": {
+      "start": 8,
+      "end": 12,
+      "loop": false
+    }
+  }
+}
