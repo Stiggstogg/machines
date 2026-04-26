@@ -43,6 +43,14 @@ export class DanceButton extends GameObjects.Sprite {
 
     private buttonClicked() {
 
+        this.scene.add.tween({
+            targets: this,
+            scale: 1.1,
+            yoyo: true,
+            duration: 100,
+            ease: 'Quart.easeOut'
+        });
+
         getAudioSprite(this.scene, 'soundeffects').play("click");
 
         this.scene.events.emit('click-dance', this.danceKey);

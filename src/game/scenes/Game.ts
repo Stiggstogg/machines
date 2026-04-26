@@ -12,7 +12,7 @@ import {GeneralButton} from '../sprites/GeneralButton.ts';
 import ProgressBar from '../sprites/ProgressBar.ts';
 import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
 import {getAudio, getAudioSprite} from '../helper/GetAudio.ts';
-import {confettiParticles} from '../helper/Confetti.ts';
+import {confettiParticles, finalConfettiParticles} from '../helper/Confetti.ts';
 
 export class Game extends Scene
 {
@@ -36,6 +36,7 @@ export class Game extends Scene
     private musicLightPlayer: MusicLightPlayer;
     private confettiEmitterLeft: GameObjects.Particles.ParticleEmitter;
     private confettiEmitterRight: GameObjects.Particles.ParticleEmitter;
+    private finalConfettiEmitter: GameObjects.Particles.ParticleEmitter;
 
     // text
     private titleText: GameObjects.Text;
@@ -109,6 +110,9 @@ export class Game extends Scene
         this.confettiEmitterRight = confettiParticles(this, 'right');
         this.confettiEmitterLeft.setDepth(3.5);
         this.confettiEmitterRight.setDepth(3.5);
+
+        this.finalConfettiEmitter = finalConfettiParticles(this);
+        this.finalConfettiEmitter.setDepth(3.5);
 
         // place basic objects
         this.floor = this.add.sprite(0, this.scale.height,'floor');     // add floor
@@ -510,16 +514,16 @@ export class Game extends Scene
         // play the win music
         getAudio(this, 'win').play({loop: true, volume: 1});
 
-        // Stop the light rotation and flicker the two lights
+        // Stop the light rotation
         this.lightLeft.rotateLightStop();
         this.lightRight.rotateLightStop();
-        this.lightLeft.putIntoSpotlightHigh();
-        this.lightRight.putIntoSpotlightHigh();
-        this.lightLeft.flickerStart(0);
-        this.lightRight.flickerStart(2);
 
         // do different things based on if it is the last level or not
         if (this.level < gameOptions.maxLevel) {
+
+            // put the player into the spotlight
+            this.lightLeft.putIntoSpotlightHigh();
+            this.lightRight.putIntoSpotlightHigh();
 
             // run the timeline to remove and add objects
             this.getDanceEndTimeline(
@@ -556,6 +560,14 @@ export class Game extends Scene
         }
         else {
 
+            // start the final confetti emitter
+            this.finalConfettiEmitter.start();
+
+            // put the player and the robot into the spotlight
+            this.lightLeft.putIntoSpotlightBoth();
+            this.lightRight.putIntoSpotlightBoth();
+
+
             this.okButton.changeText('OK');
             this.okButton.setInteractive();
 
@@ -579,6 +591,10 @@ export class Game extends Scene
                 this.startNextScene(true);
             });
         }
+
+        // start the flickering of the lights
+        this.lightLeft.flickerStart(0);
+        this.lightRight.flickerStart(2);
 
     }
 

@@ -41,6 +41,14 @@ export class GeneralButton extends GameObjects.Container {
     // Action that should happen when the button is clicked
     click(): void {
 
+        this.scene.add.tween({
+            targets: this,
+            scale: 1.1,
+            yoyo: true,
+            duration: 100,
+            ease: 'Quart.easeOut'
+        });
+
         getAudioSprite(this.scene, 'soundeffects').play("click");
 
         this.scene.events.emit('click-' + this.id);

@@ -160,4 +160,19 @@ export class Light extends GameObjects.Sprite {
 
     }
 
+    // put both (human and robot into the spotlight) for the final game screen
+    putIntoSpotlightBoth() {
+
+        this.color(gameOptions.spotlightColor);
+
+        let spotlightAngle = 55;
+
+        if (!this.left) {
+            spotlightAngle = 60;
+        }
+
+        this.setRotation(MathPhaser.DegToRad(this.rotationDirection * spotlightAngle));
+
+    }
+
 }

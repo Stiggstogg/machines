@@ -6,7 +6,7 @@ import {Human} from '../sprites/Human.ts';
 import {Light} from '../sprites/Light.ts';
 import {createDiscoBallParticles} from '../helper/DiscoBall.ts';
 import {getAudio} from '../helper/GetAudio.ts';
-import {confettiParticles} from '../helper/Confetti.ts';
+import {confettiParticles, finalConfettiParticles} from '../helper/Confetti.ts';
 
 export class MainMenu extends Scene
 {

@@ -29,7 +29,7 @@ npm run build
 ```
 
 The production-ready output will be available in the **dist** directory.
-This project was created based on my **Phaser 4, Vite and TypeScript Template** available [here](https://github.com/Stiggstogg/phaser4-ts-vite-template). More information on further commands for development are available in the README file of this repository.
+This project was created based on my **Phaser 4, Vite and TypeScript Template** available [here](https://github.com/Stiggstogg/phaser4-ts-vite-template). More information on further commands for development are available in the README file of that repository.
 
 # Credits and Tools
 Special thanks to my support and inspiration at home!

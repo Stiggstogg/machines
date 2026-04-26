@@ -53,6 +53,7 @@ export class Preloader extends Scene
         this.load.image('miniRobot', 'images/miniRobot.png');
         this.load.image('mask', 'images/mask.png');
         this.load.image('particle', 'images/particle.png');
+        this.load.image('particle2', 'images/particle2.png');
 
         // spritesheets
         this.load.spritesheet('roundButtons', 'images/roundButtons.png', {frameWidth: 110, margin: 3, spacing: 3});
@@ -112,10 +113,7 @@ export class Preloader extends Scene
         this.anims.createFromAseprite('robot');
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        //this.scene.start('MainMenu');
-        //this.scene.start('Intro');                // TODO: Remove and change here again to the main menu, this is only for faster developement
-        //this.scene.start('Empty');
-        this.scene.start('Game', {level: 1});
+        this.scene.start('MainMenu');
 
     }
 }
