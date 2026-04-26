@@ -16,7 +16,7 @@ export class Human extends Dancer {
     }
 
     // get the currently active dance key
-    private getCurrentDanceKey(): string | undefined {
+    public getCurrentDanceKey(): string | undefined {
 
         if (this.anims.isPlaying) {
             const animationKey = this.anims.getName();      // the full animation key (including the animation prefix "human-" and "robot-"

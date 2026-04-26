@@ -184,6 +184,20 @@ export class Game extends Scene
                 this.meter.setValue(false);
             }
 
+            // turn on and off the glow for the currently running dance button
+            for (let i = 0; i < gameOptions.danceKeysForButtons.length; i++) {
+
+                if (this.human.getCurrentDanceKey() == gameOptions.danceKeysForButtons[i]) {
+
+                    this.danceButtons[i].startGlow();
+
+                }
+                else {
+                    this.danceButtons[i].stopGlow();
+                }
+
+            }
+
         }
 
     }
@@ -313,7 +327,7 @@ export class Game extends Scene
         this.danceButtons = [];
 
         for (let i = 0; i < 3; i++) {
-            const button = this.add.existing(new DanceButton(this, this.positionsUI.danceButtons.x + i * this.scale.width * 0.333, this.positionsUI.danceButtons.y + this.positionsUI.startOffset.y, i));
+            const button = this.add.existing(new DanceButton(this, this.positionsUI.danceButtons.x + i * this.scale.width * 0.333, this.positionsUI.danceButtons.y + this.positionsUI.startOffset.y, i, this.bpm));
             button.setDepth(6);
             this.danceButtons.push(button);
         }
