@@ -202,7 +202,7 @@ export class Game extends Scene
         // add texts
         this.titleText = this.add.text(this.positionsUI.title.x, this.positionsUI.title.y - this.positionsUI.startOffset.y, 'Song ' + this.level + '/' + gameOptions.maxLevel, gameOptions.titleTextStyle).setOrigin(0.5, 0);
         this.instructionTextTop1 = this.add.text(this.positionsUI.instructionTop1.x + this.positionsUI.startOffset.x, this.positionsUI.instructionTop1.y, 'Watch the Robot Dance', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
-        this.instructionTextTop2 = this.add.text(this.positionsUI.instructionTop2.x - this.positionsUI.startOffset.x, this.positionsUI.instructionTop2.y, 'Find the Dance Pattern', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
+        this.instructionTextTop2 = this.add.text(this.positionsUI.instructionTop2.x - this.positionsUI.startOffset.x, this.positionsUI.instructionTop2.y, 'Figure Out the Pattern', gameOptions.instructionTextStyle).setOrigin(0.5, 0);
         this.hintText = this.add.text(this.positionsUI.hint.x, this.positionsUI.hint.y, this.hint, gameOptions.hintTextStyle).setOrigin(0.5, 0).setAlpha(0);
         this.instructionTextBottom = this.add.text(this.positionsUI.instructionBottom.x, this.positionsUI.instructionBottom.y + this.positionsUI.startOffset.y, 'Hit DANCE when You \nKnow the Pattern', gameOptions.instructionTextStyle).setOrigin(0.5, 1);
 
@@ -552,7 +552,7 @@ export class Game extends Scene
             this.getDanceEndTimeline(
                 'You Made It!',
                 'You Are One of Them!',
-                'It Is Time to Rest',
+                'It is Time to Rest',
                 true
             ).play();
 
@@ -595,8 +595,8 @@ export class Game extends Scene
 
         // run the timeline to remove and add objects
         this.getDanceEndTimeline(
-            'You Got Caught!',
-            'Wrong Dance Used',
+            'You Were Caught!',
+            'Too Many Mistakes',
             'Try Again?',
             false
         ).play();

@@ -48,7 +48,7 @@ export class Credits extends Scene
         const creditsDescriptionsTexts = [
             '',
             'Home made typescript spaghetti code',
-            'Hand drawn by me',
+            'Hand-drawn by me',
             'Original compositions played on my synthesizers',
             'Played on my synthesizers',
             'Phaser 4',

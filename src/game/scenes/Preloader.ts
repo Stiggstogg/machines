@@ -14,11 +14,11 @@ export class Preloader extends Scene
         this.add.image(this.scale.width/2, this.scale.height/2, 'logo').setScale(1, 1); // logo is already preloaded in 'Boot' scene
 
         // text
-        this.add.text(this.scale.width/2, this.scale.height * 0.20, 'CLOWNGAMING', {fontSize: '70px', color: '#FFFF00', fontStyle: 'bold'}).setOrigin(0.5);
-        this.add.text(this.scale.width/2, this.scale.height * 0.73, 'Loading', {fontSize: '30px', color: '#27FF00'}).setOrigin(0.5);
+        this.add.text(this.scale.width/2, this.scale.height * 0.20, 'CLOWNGAMING', {fontSize: '70px', color: '#fbf236', fontStyle: 'bold', resolution: 2}).setOrigin(0.5);
+        this.add.text(this.scale.width/2, this.scale.height * 0.75, 'Loading...', {fontSize: '40px', color: '#fbf236', fontStyle: 'bold', resolution: 2}).setOrigin(0.5);
 
         // progress bar parameters
-        const barWidth = this.scale.width * 0.3;           // progress bar width
+        const barWidth = this.scale.width * 0.7;           // progress bar width
         const barHeight = barWidth * 0.1;                       // progress bar height
         const barPosition = {
             x: this.scale.width / 2 - barWidth / 2,                // progress bar x coordinate (origin is 0, 0)
@@ -26,10 +26,10 @@ export class Preloader extends Scene
         };
 
         // progress bar background
-        this.add.rectangle(barPosition.x, barPosition.y, barWidth, barHeight, 0xf5f5f5).setOrigin(0);
+        this.add.rectangle(barPosition.x, barPosition.y, barWidth, barHeight, 0x5b6ee1).setOrigin(0);
 
         // progress bar
-        const bar = this.add.rectangle(barPosition.x, barPosition.y, 0, barHeight, 0x27ff00).setOrigin(0);
+        const bar = this.add.rectangle(barPosition.x, barPosition.y, 0, barHeight, 0xfbf236).setOrigin(0);
 
         //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
         this.load.on('progress', (progress: number) => {
@@ -113,8 +113,9 @@ export class Preloader extends Scene
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start('MainMenu');
-        //this.scene.start('Intro');
-        //this.scene.start('Game', {level: 5});       // TODO: Remove and change here again to the main menu, this is only for faster developement
+        //this.scene.start('Intro');                // TODO: Remove and change here again to the main menu, this is only for faster developement
+        //this.scene.start('Empty');
+        //this.scene.start('Game', {level: 5});
 
     }
 }

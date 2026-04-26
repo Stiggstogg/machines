@@ -58,10 +58,10 @@ export class Intro extends Scene
             'The year is 2036. The machines rule the world. ' +
             'Every night, they party at the robot-only MACHINE DISCO.',
             'You are an old disco machine who desperately wants in. So tonight, you throw on a questionable robot disguise and sneak through the door...',
-            'Robots have very specific dance patterns, and they do not appreciate freestyle!',
-            'OBSERVE the robots, learn their pattern, then DANCE LIKE A ROBOT. ' +
-            'Mess up too often, and you’ll be caught!',
-            'Can you get through all ' + gameOptions.maxLevel + ' songs?'
+            'Robots have very particular dance patterns, and they do not appreciate freestyle!',
+            'OBSERVE the robots, figure out their dance patterns and then DANCE LIKE A ROBOT. ' +
+            'Make too many mistakes, and you will be caught!',
+            'Can you dance through all ' + gameOptions.maxLevel + ' songs?'
         ]
 
         this.introTexts = [];
