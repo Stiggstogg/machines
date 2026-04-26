@@ -45,4 +45,4 @@ Thanks to my play testers
 # Video and Screenshots:
 Youtube: Comming soon (or never 😄)
 
-![Screenshot1](Readme/Screenshot1.png) ![Screenshot2](Readme/Screenshot2.png) ![Screenshot3](Readme/Screenshot3.png)
+![Screenshot1](Readme/Screenshot1_small.png) ![Screenshot2](Readme/Screenshot2_small.png) ![Screenshot3](Readme/Screenshot3_small.png)
